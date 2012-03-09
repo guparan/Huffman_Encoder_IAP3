@@ -21,5 +21,10 @@ Arbre fd(Arbre);
 int frequenceRacine(Arbre);
 bool estVide(Arbre);
 bool estFeuille(Arbre);
+unsigned char carRacine(Arbre);
+// affichage infixe d'un arbre (fg - racine - fd)
+void afficheArbre(Arbre);
+// construction de l'arbre de huffman à partir d'un tableau de fréquence
+Arbre construitArbre(int freq[256]);
 
 #endif
