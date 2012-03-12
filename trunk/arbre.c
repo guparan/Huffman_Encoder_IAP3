@@ -66,3 +66,45 @@ void afficheArbre(Arbre a, void(*f)(char, int))
 	f(carRacine(a), frequenceRacine(a));
 	afficheArbre(fd(a), f);
 }
+
+
+void afficheArbreDot(Arbre a, char* filename)
+{
+	FILE* f;
+	
+	if((f=fopen(filename, "w+"))==NULL) 
+	{ 
+		fprintf(stderr, "Pb ouverture ou creation \n");
+		exit(1);
+	}
+	
+	fprintf(f, "graph graphname {\n");
+	parseArbre(a, f);
+	fprintf(f, "}\n");
+		
+	fclose(f);
+}
+
+
+void parseArbre(Arbre a, FILE* file)
+{	
+	if(estVide(a)) return;
+
+	if(!estVide(fg(a)))
+	{
+		fprintf(file, "%c.%d -- %c.%d;\n", carRacine(a), frequenceRacine(a), carRacine(fg(a)), frequenceRacine(fg(a)));
+		parseArbre(fg(a), file);
+	}
+	
+	if(!estVide(fd(a)))
+	{
+		fprintf(file, "%c.%d -- %c.%d;\n", carRacine(a), frequenceRacine(a), carRacine(fd(a)), frequenceRacine(fd(a)));
+		parseArbre(fd(a), file);
+	}
+}
+
+
+Arbre construitArbre(int freq[256])
+{
+	
+}
