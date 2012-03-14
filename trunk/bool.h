@@ -1,6 +1,9 @@
-#ifndef Arbres_bool_h
-#define Arbres_bool_h
+#ifndef BOOL_H
+#define BOOL_H
 
-typedef short bool;
+
+typedef enum {false, true} bool;
+
+
 
 #endif
