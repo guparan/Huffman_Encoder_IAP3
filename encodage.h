@@ -8,4 +8,8 @@
  **/void analyseFichier(FILE *fp, int freq[256]);
 
 
+/* Pour le codage lors de la lecture de l'arbre:
+0 : fils gauche, 1 : fils droit */
+
+
 #endif
