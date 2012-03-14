@@ -37,3 +37,16 @@ ListeTrieeArbres insererArbreListe(ListeTrieeArbres l, Arbre a)
 }
 
 
+Arbre teteListe(ListeTrieeArbres l)
+{
+    return l->arbre;
+}
+
+
+ListeTrieeArbres supprimerTeteListe(ListeTrieeArbres l)
+{
+    ListeTrieeArbres tmp = l;
+    l = l->suivant;
+    free(tmp);
+    return l;
+}

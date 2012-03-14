@@ -104,7 +104,9 @@ void parseArbre(Arbre a, FILE* file)
 }
 
 
-Arbre construitArbre(int freq[256])
+/*
+ Arbre construitArbre(int freq[256])
 {
 	
 }
+ */
