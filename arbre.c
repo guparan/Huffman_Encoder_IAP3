@@ -1,6 +1,6 @@
 #include "arbre.h"
 
-Arbre creerFeuille(unsigned char* c, int freq)
+Arbre creerFeuille(unsigned char c, int freq)
 {
 	Arbre a = (Arbre)malloc(sizeof(struct noeud));
 	a->c=c;
@@ -14,7 +14,7 @@ Arbre creerFeuille(unsigned char* c, int freq)
 
 Arbre enrac(Arbre a_gauche, Arbre a_droit)
 {
-	Arbre a = creerFeuille(NULL, a_gauche->freq + a_droit->freq);
+	Arbre a = creerFeuille('\0', a_gauche->freq + a_droit->freq);
 	a->fg=a_gauche;
 	a->fd=a_droit;
 	
@@ -52,13 +52,13 @@ bool estFeuille(Arbre a)
 }
 
 
-unsigned char* carRacine(Arbre a)
+unsigned char carRacine(Arbre a)
 {
 	return a->c;
 }
 
 
-void afficheArbre(Arbre a, void(*f)(unsigned char*, int))
+void afficheArbre(Arbre a, void(*f)(unsigned char, int))
 {
 	if(estVide(a)) return;
 	
@@ -92,13 +92,13 @@ void parseArbre(Arbre a, FILE* file)
 
 	if(!estVide(fg(a)))
 	{
-		fprintf(file, "%s.%d -- %s.%d;\n", carRacine(a), frequenceRacine(a), carRacine(fg(a)), frequenceRacine(fg(a)));
+		fprintf(file, "%c.%d -- %c.%d;\n", carRacine(a), frequenceRacine(a), carRacine(fg(a)), frequenceRacine(fg(a)));
 		parseArbre(fg(a), file);
 	}
 	
 	if(!estVide(fd(a)))
 	{
-		fprintf(file, "%s.%d -- %s.%d;\n", carRacine(a), frequenceRacine(a), carRacine(fd(a)), frequenceRacine(fd(a)));
+		fprintf(file, "%c.%d -- %c.%d;\n", carRacine(a), frequenceRacine(a), carRacine(fd(a)), frequenceRacine(fd(a)));
 		parseArbre(fd(a), file);
 	}
 }
