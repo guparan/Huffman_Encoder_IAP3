@@ -25,9 +25,10 @@ Arbre creerFeuille(unsigned char c, int freq);
 
 /**
  * \fn Arbre enrac(Arbre a_gauche, Arbre a_droit);
- * \brief 
+ * \brief Renvoie un arbre ayant pour fils gauche et droit les deux arbres en paramètre et pour fréquence la somme des fréquences des arbres en paramètre.
  * 
- * \param  
+ * \param a_gauche arbre à placer en tant que fils gauche
+ * \param a_droit arbre à placer en tant que fils droit
  **/
 Arbre enrac(Arbre a_gauche, Arbre a_droit); /* freq = freq de a_gauche + freq de a_droit */
 
