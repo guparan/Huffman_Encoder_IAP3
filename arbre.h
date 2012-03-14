@@ -29,4 +29,29 @@ void afficheArbreDot(Arbre, char*);
 /* construction de l'arbre de huffman à partir d'un tableau de fréquence */
 Arbre construitArbre(int freq[256]);
 
+
+/*
+enum genre {Feuille, Noeud};
+
+struct noeud {
+	int freq;
+	struct noeud *fg, *fd;
+};
+
+struct feuille {
+	unsigned char c;
+	int freq;
+};
+
+union element {
+	struct feuille *feuille;
+	struct noeud *noeud;
+};
+
+typedef struct arbre {
+	enum genre genre;
+	union element element;
+} *Arbre;
+*/
+
 #endif
