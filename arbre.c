@@ -58,7 +58,7 @@ unsigned char* carRacine(Arbre a)
 }
 
 
-void afficheArbre(Arbre a, void(*f)(char*, int))
+void afficheArbre(Arbre a, void(*f)(unsigned char*, int))
 {
 	if(estVide(a)) return;
 	
@@ -92,13 +92,13 @@ void parseArbre(Arbre a, FILE* file)
 
 	if(!estVide(fg(a)))
 	{
-		fprintf(file, "%c.%d -- %c.%d;\n", carRacine(a), frequenceRacine(a), carRacine(fg(a)), frequenceRacine(fg(a)));
+		fprintf(file, "%s.%d -- %s.%d;\n", carRacine(a), frequenceRacine(a), carRacine(fg(a)), frequenceRacine(fg(a)));
 		parseArbre(fg(a), file);
 	}
 	
 	if(!estVide(fd(a)))
 	{
-		fprintf(file, "%c.%d -- %c.%d;\n", carRacine(a), frequenceRacine(a), carRacine(fd(a)), frequenceRacine(fd(a)));
+		fprintf(file, "%s.%d -- %s.%d;\n", carRacine(a), frequenceRacine(a), carRacine(fd(a)), frequenceRacine(fd(a)));
 		parseArbre(fd(a), file);
 	}
 }
