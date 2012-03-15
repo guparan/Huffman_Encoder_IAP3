@@ -62,3 +62,25 @@ ListeArbres liste_supprimerTete(ListeArbres l)
     free(tmp);
     return l;
 }
+
+
+ListeArbres arbre_construitListeArbres(int freq[256])
+{
+    int i;
+    ListeArbres liste = liste_creer();
+    
+    for (i=0; i<256; i++)
+    {
+        if (freq[i] != 0)
+        {
+            liste = liste_insererTriArbre(liste, arbre_creerFeuille(i, freq[i]));
+        }
+    }
+    return liste;
+}
+
+
+Arbre arbre_construitArbre(ListeArbres l)
+{
+	
+}

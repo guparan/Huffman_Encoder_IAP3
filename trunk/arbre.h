@@ -128,16 +128,6 @@ void arbre_afficheArbreDot(Arbre, char*);
 
 
 
-/* construction de l'arbre de huffman à partir d'un tableau de fréquence */
-
-/**
- * \fn Arbre arbre_construitArbre(int freq[256]);
- * \brief Renvoie l'arbre de Huffman construit à partir du tableau de fréquences en paramètre.
- * 
- * \param freq tableau des fréquences d'apparition des caractères ASCII
- **/
-Arbre arbre_construitArbre(int freq[256]);
-
 
 /*
 enum genre {Feuille, Noeud};
