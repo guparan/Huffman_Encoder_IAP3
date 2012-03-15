@@ -4,6 +4,13 @@
 #include <stdio.h>
 #include "arbre.h"
 
+
+typedef struct ListeArbres {
+	Arbre arbre;
+	struct ListeArbres* suivant;
+} *ListeArbres;
+
+
 /**
  * \fn void analyseFichier(FILE *fp, int freq[256])
  * \brief Remplit le tableau freq avec le nombre d'occurences de chaque caractère du fichier pointé par fp
