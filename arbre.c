@@ -1,6 +1,6 @@
 #include "arbre.h"
 
-Arbre creerFeuille(unsigned char c, int freq)
+Arbre arbre_creerFeuille(unsigned char c, int freq)
 {
 	Arbre a = (Arbre)malloc(sizeof(struct noeud));
 	a->c=c;
@@ -12,9 +12,9 @@ Arbre creerFeuille(unsigned char c, int freq)
 }
 
 
-Arbre enrac(Arbre a_gauche, Arbre a_droit)
+Arbre arbre_enrac(Arbre a_gauche, Arbre a_droit)
 {
-	Arbre a = creerFeuille('\0', a_gauche->freq + a_droit->freq);
+	Arbre a = arbre_creerFeuille('\0', a_gauche->freq + a_droit->freq);
 	a->fg=a_gauche;
 	a->fd=a_droit;
 	
@@ -22,55 +22,57 @@ Arbre enrac(Arbre a_gauche, Arbre a_droit)
 }
 
 
-Arbre fg(Arbre a)
+Arbre arbre_fg(Arbre a)
 {
 	return a->fg;
 }
 
 
-Arbre fd(Arbre a)
+Arbre arbre_fd(Arbre a)
 {
 	return a->fd;
 }
 
 
-int frequenceRacine(Arbre a)
+int arbre_frequenceRacine(Arbre a)
 {
 	return a->freq;
 }
 
 
-bool estVide(Arbre a)
+bool arbre_estVide(Arbre a)
 {
 	return (a==NULL);
 }
 
 
-bool estFeuille(Arbre a)
+bool arbre_estFeuille(Arbre a)
 {
-	return (estVide(fd(a)) && estVide(fg(a)));
+	return (arbre_estVide(arbre_fd(a)) && arbre_estVide(arbre_fg(a)));
 }
 
 
-unsigned char carRacine(Arbre a)
+unsigned char arbre_carRacine(Arbre a)
 {
 	return a->c;
 }
 
 
-void afficheArbre(Arbre a, void(*f)(unsigned char, int))
+void arbre_afficheArbre(Arbre a, void(*f)(unsigned char, int))
 {
-	if(estVide(a)) return;
+	if(arbre_estVide(a)) return;
 	
-	afficheArbre(fg(a), f);
-	f(carRacine(a), frequenceRacine(a));
-	afficheArbre(fd(a), f);
+	arbre_afficheArbre(arbre_fg(a), f);
+	f(arbre_carRacine(a), arbre_frequenceRacine(a));
+	arbre_afficheArbre(arbre_fd(a), f);
 }
 
 
-void afficheArbreDot(Arbre a, char* filename)
+void arbre_afficheArbreDot(Arbre a, char* filename)
 {
 	FILE* f;
+	char* command;
+	command=(char*)malloc(2*strlen(filename)*sizeof(char)+16);
 	
 	if((f=fopen(filename, "w+"))==NULL) 
 	{ 
@@ -79,34 +81,70 @@ void afficheArbreDot(Arbre a, char* filename)
 	}
 	
 	fprintf(f, "graph graphname {\n");
-	parseArbre(a, f);
+	arbre_parseArbre(a, f);
 	fprintf(f, "}\n");
 		
 	fclose(f);
+	sprintf(command, "dot %s -Tps -o %s.ps", filename, filename);
+	if(system(command)==-1)
+	{
+		fprintf(stderr, "Erreur fct system");
+		exit(-1);
+	}
 }
 
 
-void parseArbre(Arbre a, FILE* file)
+void arbre_parseArbre(Arbre a, FILE* file)
 {	
-	if(estVide(a)) return;
+	if(arbre_estVide(a)) return;
 
-	if(!estVide(fg(a)))
+	if(!arbre_estVide(arbre_fg(a)))
 	{
-		fprintf(file, "%c.%d -- %c.%d;\n", carRacine(a), frequenceRacine(a), carRacine(fg(a)), frequenceRacine(fg(a)));
-		parseArbre(fg(a), file);
+		if(arbre_carRacine(a)=='\0' && arbre_carRacine(arbre_fg(a))=='\0')
+		{
+			fprintf(file, "%d -- %d;\n", arbre_frequenceRacine(a),arbre_frequenceRacine(arbre_fg(a)));
+		}
+		else if(arbre_carRacine(a)=='\0' && arbre_carRacine(arbre_fg(a))!='\0')
+		{
+			fprintf(file, "%d -- %c_%d;\n", arbre_frequenceRacine(a), arbre_carRacine(arbre_fg(a)), arbre_frequenceRacine(arbre_fg(a)));
+		}
+		else if(arbre_carRacine(a)!='\0' && arbre_carRacine(arbre_fg(a))=='\0')
+		{
+			fprintf(file, "%c_%d -- %d;\n", arbre_carRacine(a), arbre_frequenceRacine(a), arbre_frequenceRacine(arbre_fg(a)));
+		}
+		else if(arbre_carRacine(a)!='\0' && arbre_carRacine(arbre_fg(a))!='\0')
+		{
+			fprintf(file, "%c_%d -- %c_%d;\n", arbre_carRacine(a), arbre_frequenceRacine(a), arbre_carRacine(arbre_fg(a)), arbre_frequenceRacine(arbre_fg(a)));
+		}
+		arbre_parseArbre(arbre_fg(a), file);
 	}
 	
-	if(!estVide(fd(a)))
+	if(!arbre_estVide(arbre_fd(a)))
 	{
-		fprintf(file, "%c.%d -- %c.%d;\n", carRacine(a), frequenceRacine(a), carRacine(fd(a)), frequenceRacine(fd(a)));
-		parseArbre(fd(a), file);
+		if(arbre_carRacine(a)=='\0' && arbre_carRacine(arbre_fd(a))=='\0')
+		{
+			fprintf(file, "%d -- %d;\n", arbre_frequenceRacine(a),arbre_frequenceRacine(arbre_fd(a)));
+		}
+		else if(arbre_carRacine(a)=='\0' && arbre_carRacine(arbre_fd(a))!='\0')
+		{
+			fprintf(file, "%d -- %c_%d;\n", arbre_frequenceRacine(a), arbre_carRacine(arbre_fd(a)), arbre_frequenceRacine(arbre_fd(a)));
+		}
+		else if(arbre_carRacine(a)!='\0' && arbre_carRacine(arbre_fd(a))=='\0')
+		{
+			fprintf(file, "%c_%d -- %d;\n", arbre_carRacine(a), arbre_frequenceRacine(a), arbre_frequenceRacine(arbre_fd(a)));
+		}
+		else if(arbre_carRacine(a)!='\0' && arbre_carRacine(arbre_fd(a))!='\0')
+		{
+			fprintf(file, "%c_%d -- %c_%d;\n", arbre_carRacine(a), arbre_frequenceRacine(a), arbre_carRacine(arbre_fd(a)), arbre_frequenceRacine(arbre_fd(a)));
+		}
+		arbre_parseArbre(arbre_fd(a), file);
 	}
 }
 
 
-/*
- Arbre construitArbre(int freq[256])
+
+Arbre arbre_construitArbre(int freq[256])
 {
 	
 }
- */
+ 

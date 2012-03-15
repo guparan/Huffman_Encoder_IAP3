@@ -11,39 +11,39 @@ typedef struct element {
 
 
 /**
- * \fn ListeTrieeArbres creerListe(void);
+ * \fn ListeTrieeArbres liste_creer(void);
  * \brief Renvoie NULL
  * 
  **/
-ListeTrieeArbres creerListe(void);
+ListeTrieeArbres liste_creer(void);
 
 
 /**
- * \fn ListeTrieeArbres insererArbreListe(ListeTrieeArbres, Arbre);
+ * \fn ListeTrieeArbres liste_insererArbre(ListeTrieeArbres, Arbre);
  * \brief Renvoie une liste construite à partir de la liste et de l'arbre en paramètres
  * 
  * \param l liste d'arbres triée
  * \param a arbre à insérer
  **/
-ListeTrieeArbres insererArbreListe(ListeTrieeArbres, Arbre);
+ListeTrieeArbres liste_insererArbre(ListeTrieeArbres, Arbre);
 
 
 /**
- * \fn Arbre teteListe(ListeTrieeArbres);
+ * \fn Arbre liste_tete(ListeTrieeArbres);
  * \brief Renvoie l'arbre en tête de la liste en paramètre (fréquence la plus faible de la liste)
  * 
  * \param l liste d'arbres triée
  **/
-Arbre teteListe(ListeTrieeArbres);
+Arbre liste_tete(ListeTrieeArbres);
 
 
 /**
- * \fn ListeTrieeArbres supprimerTeteListe(ListeTrieeArbres);
+ * \fn ListeTrieeArbres liste_supprimerTete(ListeTrieeArbres);
  * \brief Supprime le premier arbre de la liste en paramètre et renvoie la nouvelle liste
  * 
  * \param l liste d'arbres triée
  **/
-ListeTrieeArbres supprimerTeteListe(ListeTrieeArbres);
+ListeTrieeArbres liste_supprimerTete(ListeTrieeArbres);
 
 
 #endif
