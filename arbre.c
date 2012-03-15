@@ -143,6 +143,8 @@ void arbre_parseArbre(Arbre a, FILE* file)
 
 
 
+
+
 Arbre arbre_construitArbre(int freq[256])
 {
 	
