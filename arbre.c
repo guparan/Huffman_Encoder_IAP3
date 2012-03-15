@@ -140,13 +140,4 @@ void arbre_parseArbre(Arbre a, FILE* file)
 		arbre_parseArbre(arbre_fd(a), file);
 	}
 }
-
-
-
-
-
-Arbre arbre_construitArbre(int freq[256])
-{
-	
-}
  
