@@ -7,8 +7,24 @@ ListeArbres liste_creer(void)
 }
 
 
+ListeArbres liste_estVide(ListeArbres l)
+{
+	return (l==NULL);
+}
+
+
 ListeArbres liste_insererTriArbre(ListeArbres l, Arbre a)
-{	
+{
+	/* Si la liste est vide */
+	if(liste_estVide(l))
+	{
+		l=(ListeArbres)malloc(sizeof(struct element));
+		l->arbre=a;
+		l->suivant=NULL;
+		return l;
+	}
+	
+	/* Si le prochain element a une frequence superieure */
 	if(a->freq <= l->arbre->freq)
 	{
 		ListeArbres new = (ListeArbres)malloc(sizeof(struct element));
@@ -17,6 +33,7 @@ ListeArbres liste_insererTriArbre(ListeArbres l, Arbre a)
 		return new;
 	}
 	
+	/* Si fin de liste */
 	if(l->suivant==NULL)
 	{
 		ListeArbres new = (ListeArbres)malloc(sizeof(struct element));

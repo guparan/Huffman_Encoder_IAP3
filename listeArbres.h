@@ -18,6 +18,9 @@ typedef struct element {
 ListeArbres liste_creer(void);
 
 
+ListeArbres liste_estVide(ListeArbres);
+
+
 /**
  * \fn ListeArbres liste_insererTriArbre(ListeArbres, Arbre);
  * \brief Renvoie une liste construite à partir de la liste et de l'arbre en paramètres
