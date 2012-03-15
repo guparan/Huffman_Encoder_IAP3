@@ -140,4 +140,3 @@ void arbre_parseArbre(Arbre a, FILE* file)
 		arbre_parseArbre(arbre_fd(a), file);
 	}
 }
- 

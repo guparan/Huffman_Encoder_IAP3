@@ -18,7 +18,7 @@ typedef struct element {
 ListeArbres liste_creer(void);
 
 
-ListeArbres liste_estVide(ListeArbres);
+bool liste_estVide(ListeArbres);
 
 
 /**
@@ -51,23 +51,21 @@ ListeArbres liste_supprimerTete(ListeArbres);
 
 
 /* construction de l'arbre de huffman à partir d'un tableau de fréquence */
-
-
 /**
- * \fn ListeArbres arbre_construitListeArbres(int freq[256]);
+ * \fn ListeArbres liste_construitListeArbres(int freq[256]);
  * \brief Construit une liste d'arbres (contenant chacun une seule feuille) à partir du tableau de fréquences obtenu suite à l'analyse d'un fichier
  * 
  * \param freq tableau des fréquences d'apparition des caractères ASCII
  **/
-ListeArbres arbre_construitListeArbres(int freq[256]);
+ListeArbres liste_construitListeArbres(int freq[256]);
 
 
 /**
- * \fn Arbre arbre_construitArbre(int freq[256]);
+ * \fn Arbre liste_construitArbre(int freq[256]);
  * \brief Renvoie l'arbre de Huffman construit à partir du tableau de fréquences en paramètre.
  * 
  * \param l liste d'arbres (contenant chacun une unique feuille) correspondant à la liste des caractères apparaissant dans le fichier analysé
  **/
-Arbre arbre_construitArbre(ListeArbres);
+Arbre liste_construitArbre(ListeArbres);
 
 #endif

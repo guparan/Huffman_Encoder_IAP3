@@ -7,7 +7,7 @@ ListeArbres liste_creer(void)
 }
 
 
-ListeArbres liste_estVide(ListeArbres l)
+bool liste_estVide(ListeArbres l)
 {
 	return (l==NULL);
 }
@@ -49,7 +49,7 @@ ListeArbres liste_insererTriArbre(ListeArbres l, Arbre a)
 }
 
 
-Arbre tete(ListeArbres l)
+Arbre liste_tete(ListeArbres l)
 {
     return l->arbre;
 }
@@ -64,7 +64,7 @@ ListeArbres liste_supprimerTete(ListeArbres l)
 }
 
 
-ListeArbres arbre_construitListeArbres(int freq[256])
+ListeArbres liste_construitListeArbres(int freq[256])
 {
     int i;
     ListeArbres liste = liste_creer();
@@ -80,7 +80,18 @@ ListeArbres arbre_construitListeArbres(int freq[256])
 }
 
 
-Arbre arbre_construitArbre(ListeArbres l)
+Arbre liste_construitArbre(ListeArbres l)
 {
+	Arbre result;
 	
+	if(l->suivant==NULL) return l->arbre;
+	
+	result = arbre_enrac(l->arbre, l->suivant->arbre);
+	
+	l=liste_supprimerTete(l);
+	l=liste_supprimerTete(l);
+	
+	l=liste_insererTriArbre(l, result);
+	
+	return liste_construitArbre(l);
 }
