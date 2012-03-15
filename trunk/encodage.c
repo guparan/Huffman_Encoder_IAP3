@@ -1,6 +1,5 @@
 #include "encodage.h"
 
-
 void analyseFichier(FILE *fp, int freq[256])
 {
 	int caractereActuel = 0;
