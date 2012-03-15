@@ -1,5 +1,5 @@
-#ifndef LISTETRIEEARBRES_H
-#define LISTETRIEEARBRES_H
+#ifndef ListeArbres_H
+#define ListeArbres_H
 
 #include "arbre.h"
 
@@ -7,43 +7,43 @@
 typedef struct element {
 	Arbre arbre;
 	struct element* suivant;
-} *ListeTrieeArbres;
+} *ListeArbres;
 
 
 /**
- * \fn ListeTrieeArbres liste_creer(void);
+ * \fn ListeArbres liste_creer(void);
  * \brief Renvoie NULL
  * 
  **/
-ListeTrieeArbres liste_creer(void);
+ListeArbres liste_creer(void);
 
 
 /**
- * \fn ListeTrieeArbres liste_insererArbre(ListeTrieeArbres, Arbre);
+ * \fn ListeArbres liste_insererTriArbre(ListeArbres, Arbre);
  * \brief Renvoie une liste construite à partir de la liste et de l'arbre en paramètres
  * 
  * \param l liste d'arbres triée
  * \param a arbre à insérer
  **/
-ListeTrieeArbres liste_insererArbre(ListeTrieeArbres, Arbre);
+ListeArbres liste_insererTriArbre(ListeArbres, Arbre);
 
 
 /**
- * \fn Arbre liste_tete(ListeTrieeArbres);
+ * \fn Arbre liste_tete(ListeArbres);
  * \brief Renvoie l'arbre en tête de la liste en paramètre (fréquence la plus faible de la liste)
  * 
  * \param l liste d'arbres triée
  **/
-Arbre liste_tete(ListeTrieeArbres);
+Arbre liste_tete(ListeArbres);
 
 
 /**
- * \fn ListeTrieeArbres liste_supprimerTete(ListeTrieeArbres);
+ * \fn ListeArbres liste_supprimerTete(ListeArbres);
  * \brief Supprime le premier arbre de la liste en paramètre et renvoie la nouvelle liste
  * 
  * \param l liste d'arbres triée
  **/
-ListeTrieeArbres liste_supprimerTete(ListeTrieeArbres);
+ListeArbres liste_supprimerTete(ListeArbres);
 
 
 #endif
