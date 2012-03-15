@@ -127,30 +127,4 @@ void arbre_afficheArbreDot(Arbre, char*);
 
 
 
-
-
-/*
-enum genre {Feuille, Noeud};
-
-struct noeud {
-	int freq;
-	struct noeud *fg, *fd;
-};
-
-struct feuille {
-	unsigned char c;
-	int freq;
-};
-
-union element {
-	struct feuille *feuille;
-	struct noeud *noeud;
-};
-
-typedef struct arbre {
-	enum genre genre;
-	union element element;
-} *Arbre;
-*/
-
 #endif
