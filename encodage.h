@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "arbre.h"
+#include "listeArbres.h"
 
 
 /**
