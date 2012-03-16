@@ -20,6 +20,8 @@ ListeArbres liste_creer(void);
 
 bool liste_estVide(ListeArbres);
 
+void liste_afficher(ListeArbres);
+
 
 /**
  * \fn ListeArbres liste_insererTriArbre(ListeArbres, Arbre);
