@@ -12,6 +12,17 @@ void analyseFichier(FILE *fp, int freq[256])
 }
 
 
+char** encodage_preEncode(Arbre a)
+{
+	/* Parcours de l'arbre
+	 * construction d'une chaine de 1 et 0
+	 * a chaque car rencontré, copie de la chaine à l'indice ASCII 
+	 * retourne le tableau des chaines */
+	 
+	 	 
+}
+
+
 char* encode(Arbre a, char c)
 {
     int i =0;
@@ -59,7 +70,7 @@ char decode(Arbre a, char* code)
     
     while (code[i] != '\0')
     {
-        if (code[i] == 0)
+        if (code[i] == '0')
         {
             courant = courant->fg;
         }

@@ -81,6 +81,7 @@ ListeArbres liste_supprimerTete(ListeArbres l)
 ListeArbres liste_construitListeArbres(int freq[256])
 {
     int i;
+    int j=0;
     ListeArbres liste = liste_creer();
     
     for (i=0; i<256; i++)
@@ -88,8 +89,10 @@ ListeArbres liste_construitListeArbres(int freq[256])
         if (freq[i] != 0)
         {
             liste = liste_insererTriArbre(liste, arbre_creerFeuille(i, freq[i]));
+            j++;
         }
     }
+    printf("%d feuilles ?\n", j);
     return liste;
 }
 
