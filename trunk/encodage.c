@@ -44,7 +44,31 @@ char* encode(Arbre a, char c)
             courante = courante->suivant;
         }
     }
+    res = realloc(res, (i+1)*sizeof(char));
+    res[i] = '\0';
     
+    return res;
+}
+
+
+char decode(Arbre a, char* code)
+{
+    char res;
+    Arbre courant = a;
+    int i = 0;
+    while (code[i] != '\0')
+    {
+        if (code[i] == 0)
+        {
+            courant = courant->fg;
+        }
+        else
+        {
+            courant = courant->fd;
+        }
+        i++;
+    }
+    res = courant->c;
     
     return res;
 }
