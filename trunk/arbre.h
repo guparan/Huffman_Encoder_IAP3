@@ -92,6 +92,8 @@ bool arbre_estFeuille(Arbre);
 unsigned char arbre_carRacine(Arbre);
 
 
+int arbre_nbFeuilles(Arbre);
+
 
 
 /* affichage infixe d'un arbre (fg - racine - fd) */

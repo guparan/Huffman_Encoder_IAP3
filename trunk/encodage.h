@@ -19,6 +19,9 @@ void analyseFichier(FILE *fp, int freq[256]);
  0 : fils gauche, 1 : fils droit */
 
 
+char** encodage_preEncode(Arbre);
+
+
 /**
  * \fn char* encode(Arbre a, char c);
  * \brief Produit la séquence de bits du code de Huffman (sous forme d'une chaîne de caractères) à partir d'un arbre de Huffman et d'un caractère

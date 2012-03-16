@@ -57,6 +57,16 @@ unsigned char arbre_carRacine(Arbre a)
 	return a->c;
 }
 
+/* precondition : l'arbre est un ABR */
+int arbre_nbFeuilles(Arbre a)
+{
+	if(arbre_estVide(arbre_fg(a)) && arbre_estVide(arbre_fd(a)))
+	{
+		return 1;
+	}
+	else return arbre_nbFeuilles(arbre_fg(a))+arbre_nbFeuilles(arbre_fd(a));
+}
+
 
 void arbre_afficheArbre(Arbre a, void(*f)(unsigned char, int))
 {
@@ -72,7 +82,7 @@ void arbre_afficheArbreDot(Arbre a, char* filename)
 {
 	FILE* f;
 	char* command;
-	command=(char*)malloc(2*strlen(filename)*sizeof(char)+32);
+	command=(char*)malloc(2*strlen(filename)*sizeof(char)+34);
 	
 	if((f=fopen(filename, "w+"))==NULL) 
 	{ 
@@ -85,7 +95,7 @@ void arbre_afficheArbreDot(Arbre a, char* filename)
 	fprintf(f, "}\n");
 		
 	fclose(f);
-	sprintf(command, "dot %s -Tps -Gcharset=latin1 -o %s.ps", filename, filename);
+	sprintf(command, "dot %s -Tpng -Gcharset=latin1 -o %s.png", filename, filename);
 	if(system(command)==-1)
 	{
 		fprintf(stderr, "Erreur fct system");

@@ -63,6 +63,7 @@ void test_analyseFichier(void)
 	
 	arbre_afficheArbreDot(result, "test.dot");
 	
+	printf("%d feuilles !\n", arbre_nbFeuilles(result));
 }
 
 
@@ -84,10 +85,10 @@ void test_decode(void)
 		
 	result=liste_construitArbre(liste_construitListeArbres(freq));
     
-    printf("Le code 100000100010 correspond au caractère : %c\n",decode(result, "100000100010"));
+    printf("Le code correspond au caractère : %d\n", decode(result, "10010"));
 }
 
-
+ 
 int main (void)
 {
 	test_decode();
