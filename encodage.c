@@ -42,13 +42,13 @@ char* encode(Arbre a, char c)
     /* Traduction du chemin: */
     courante = chemin;
     while (courante->suivant != NULL) {
-        if (courante->suivant->arbre == courante->arbre->fg) {
+        if (courante->suivant->arbre == arbre_fg(courante->arbre)) {
             res = realloc(res, (i+1)*sizeof(char));
             res[i] = 0;
             i++;
             courante = courante->suivant;
         }
-        else if (courante->suivant->arbre == courante->arbre->fd) {
+        else if (courante->suivant->arbre == arbre_fd(courante->arbre)) {
             res = realloc(res, (i+1)*sizeof(char));
             res[i] = 1;
             i++;
@@ -64,7 +64,7 @@ char* encode(Arbre a, char c)
 
 char decode(Arbre a, char* code)
 {
-    char res;
+    char res = '\0';
     Arbre courant = a;
     int i = 0;
     
@@ -72,19 +72,25 @@ char decode(Arbre a, char* code)
     {
         if (code[i] == '0')
         {
-            courant = courant->fg;
+            courant = arbre_fg(courant);    //on part dans le fils gauche
         }
-        else  /* si code[i] == 1 */
+        else if (code[i] == '1')
         {
-            courant = courant->fd;
+            courant = arbre_fd(courant);    //on part dans le fils droit
         }
-        i++;
+        else
+        {
+            return res;     //on sort de la fonction, le code en paramètre est erroné
+        }
+        i++;    //passage au caractère suivant dans le code
     }
     
-    if (courant->c)
+    if (arbre_estFeuille(courant))   //on vérifie que courant est une feuille avant d'affecter la valeur de res
     {
-        res = courant->c;
+        res = arbre_carRacine(courant);
     }
+    //si courant n'est pas une feuille, res est inchangé est vaut '\0'
+    
     
     return res;
 }

@@ -18,8 +18,21 @@ typedef struct element {
 ListeArbres liste_creer(void);
 
 
+/**
+ * \fn bool liste_estVide(ListeArbres);
+ * \brief Renvoie true (1) si la liste l est vide et false (0) sinon
+ * 
+ * \param l liste d'arbres
+ **/
 bool liste_estVide(ListeArbres);
 
+
+/**
+ * \fn void liste_afficher(ListeArbres);
+ * \brief Affiche la liste des caractères associée a leur fréquence d'apparition
+ * 
+ * \param l liste d'arbres étant des feuilles
+ **/
 void liste_afficher(ListeArbres);
 
 
