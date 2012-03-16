@@ -72,8 +72,24 @@ void test_construitArbre(void)
 }
 
 
+void test_decode(void)
+{
+    int freq[256]={0};
+	Arbre result;
+	FILE* fichier;
+	
+	fichier=fopen("./testCompression", "ro");
+    
+    analyseFichier(fichier, freq);
+		
+	result=liste_construitArbre(liste_construitListeArbres(freq));
+    
+    printf("Le code 100000100010 correspond au caractère : %c\n",decode(result, "100000100010"));
+}
+
+
 int main (void)
 {
-	test_analyseFichier();
+	test_decode();
 	return 0;
 }
