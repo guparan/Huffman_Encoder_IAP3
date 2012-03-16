@@ -34,8 +34,6 @@ Arbre arbre_creerFeuille(unsigned char c, int freq);
 Arbre arbre_enrac(Arbre a_gauche, Arbre a_droit); /* freq = freq de a_gauche + freq de a_droit */
 
 
-
-
 /* selecteurs et tests élémentaires */
 
 /**
@@ -54,6 +52,15 @@ Arbre arbre_fg(Arbre);
  * \param arbre 
  **/
 Arbre arbre_fd(Arbre);
+
+
+/**
+ * \fn unsigned char arbre_carRacine(Arbre);
+ * \brief Renvoie le caractère de la racine de l'arbre en paramètre. Si ce n'est pas une feuille, la fonction renvoie le caractère nul (\0).
+ * 
+ * \param arbre
+ **/
+unsigned char arbre_carRacine(Arbre);
 
 
 /**
@@ -84,16 +91,12 @@ bool arbre_estFeuille(Arbre);
 
 
 /**
- * \fn unsigned char arbre_carRacine(Arbre);
- * \brief Renvoie le caractère de la racine de l'arbre en paramètre. Si ce n'est pas une feuille, la fonction renvoie le caractère nul (\0).
+ * \fn int arbre_nbFeuilles(Arbre);
+ * \brief Renvoie le nombre de feuille de l'arbre en paramètre
  * 
  * \param arbre
  **/
-unsigned char arbre_carRacine(Arbre);
-
-
 int arbre_nbFeuilles(Arbre);
-
 
 
 /* affichage infixe d'un arbre (fg - racine - fd) */

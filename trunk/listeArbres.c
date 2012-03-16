@@ -21,7 +21,7 @@ void liste_afficher(ListeArbres l)
 	}
 	else while(l)
 	{
-		printf("%d : %d \n", l->arbre->c, l->arbre->freq);
+		printf("%d : %d \n", arbre_carRacine(l->arbre), arbre_frequenceRacine(l->arbre));
 		l=l->suivant;
 	}
 }
