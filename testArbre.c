@@ -1,5 +1,4 @@
-#include "arbre.h"
-
+#include "encodage.h"
 
 void my_display(unsigned char c, int f)
 {
@@ -29,6 +28,44 @@ void test_afficheArbre(void)
 }
 
 
+void test_insererTriArbre(void)
+{
+	Arbre a = arbre_creerFeuille('a', 3);
+	Arbre b = arbre_creerFeuille('b', 4);
+	
+	ListeArbres l = liste_creer();
+	
+	liste_afficher(l);
+	
+	l=liste_insererTriArbre(l, a);
+	l=liste_insererTriArbre(l, b);
+	
+	liste_afficher(l);
+}
+
+
+void test_analyseFichier(void)
+{
+	int freq[256]={0};
+	ListeArbres liste;
+	Arbre result;
+	FILE* fichier;
+	
+	fichier=fopen("./test.txt", "ro");
+	
+	analyseFichier(fichier, freq);
+	
+	liste=liste_construitListeArbres(freq);
+	
+	liste_afficher(liste);
+	
+	result=liste_construitArbre(liste);
+	
+	arbre_afficheArbreDot(result, "test.dot");
+	
+}
+
+
 void test_construitArbre(void)
 {
 	
@@ -37,6 +74,6 @@ void test_construitArbre(void)
 
 int main (void)
 {
-	test_afficheArbre();
+	test_analyseFichier();
 	return 0;
 }

@@ -2,7 +2,6 @@
 #define __ENCODAGE_H_
 
 #include <stdio.h>
-#include "arbre.h"
 #include "listeArbres.h"
 
 

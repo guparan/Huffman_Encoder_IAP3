@@ -72,7 +72,7 @@ void arbre_afficheArbreDot(Arbre a, char* filename)
 {
 	FILE* f;
 	char* command;
-	command=(char*)malloc(2*strlen(filename)*sizeof(char)+16);
+	command=(char*)malloc(2*strlen(filename)*sizeof(char)+32);
 	
 	if((f=fopen(filename, "w+"))==NULL) 
 	{ 
@@ -85,7 +85,7 @@ void arbre_afficheArbreDot(Arbre a, char* filename)
 	fprintf(f, "}\n");
 		
 	fclose(f);
-	sprintf(command, "dot %s -Tps -o %s.ps", filename, filename);
+	sprintf(command, "dot %s -Tps -Gcharset=latin1 -o %s.ps", filename, filename);
 	if(system(command)==-1)
 	{
 		fprintf(stderr, "Erreur fct system");
@@ -102,19 +102,19 @@ void arbre_parseArbre(Arbre a, FILE* file)
 	{
 		if(arbre_carRacine(a)=='\0' && arbre_carRacine(arbre_fg(a))=='\0')
 		{
-			fprintf(file, "%d -- %d;\n", arbre_frequenceRacine(a),arbre_frequenceRacine(arbre_fg(a)));
+			fprintf(file, "\"%d (%u)\" -- \"%d (%u)\";\n", arbre_frequenceRacine(a), (unsigned int)a, arbre_frequenceRacine(arbre_fg(a)), (unsigned int)arbre_fg(a));
 		}
 		else if(arbre_carRacine(a)=='\0' && arbre_carRacine(arbre_fg(a))!='\0')
 		{
-			fprintf(file, "%d -- %c_%d;\n", arbre_frequenceRacine(a), arbre_carRacine(arbre_fg(a)), arbre_frequenceRacine(arbre_fg(a)));
+			fprintf(file, "\"%d (%u)\" -- \"%c %d\";\n", arbre_frequenceRacine(a), (unsigned int)a, arbre_carRacine(arbre_fg(a)), arbre_frequenceRacine(arbre_fg(a)));
 		}
 		else if(arbre_carRacine(a)!='\0' && arbre_carRacine(arbre_fg(a))=='\0')
 		{
-			fprintf(file, "%c_%d -- %d;\n", arbre_carRacine(a), arbre_frequenceRacine(a), arbre_frequenceRacine(arbre_fg(a)));
+			fprintf(file, "\"%c %d\" -- \"%d (%u)\";\n", arbre_carRacine(a), arbre_frequenceRacine(a), arbre_frequenceRacine(arbre_fg(a)), (unsigned int)arbre_fg(a));
 		}
 		else if(arbre_carRacine(a)!='\0' && arbre_carRacine(arbre_fg(a))!='\0')
 		{
-			fprintf(file, "%c_%d -- %c_%d;\n", arbre_carRacine(a), arbre_frequenceRacine(a), arbre_carRacine(arbre_fg(a)), arbre_frequenceRacine(arbre_fg(a)));
+			fprintf(file, "\"%c %d\" -- \"%c %d\";\n", arbre_carRacine(a), arbre_frequenceRacine(a), arbre_carRacine(arbre_fg(a)), arbre_frequenceRacine(arbre_fg(a)));
 		}
 		arbre_parseArbre(arbre_fg(a), file);
 	}
@@ -123,19 +123,19 @@ void arbre_parseArbre(Arbre a, FILE* file)
 	{
 		if(arbre_carRacine(a)=='\0' && arbre_carRacine(arbre_fd(a))=='\0')
 		{
-			fprintf(file, "%d -- %d;\n", arbre_frequenceRacine(a),arbre_frequenceRacine(arbre_fd(a)));
+			fprintf(file, "\"%d (%u)\" -- \"%d (%u)\";\n", arbre_frequenceRacine(a), (unsigned int)a, arbre_frequenceRacine(arbre_fd(a)), (unsigned int)arbre_fd(a));
 		}
 		else if(arbre_carRacine(a)=='\0' && arbre_carRacine(arbre_fd(a))!='\0')
 		{
-			fprintf(file, "%d -- %c_%d;\n", arbre_frequenceRacine(a), arbre_carRacine(arbre_fd(a)), arbre_frequenceRacine(arbre_fd(a)));
+			fprintf(file, "\"%d (%u)\" -- \"%c %d\";\n", arbre_frequenceRacine(a), (unsigned int)a, arbre_carRacine(arbre_fd(a)), arbre_frequenceRacine(arbre_fd(a)));
 		}
 		else if(arbre_carRacine(a)!='\0' && arbre_carRacine(arbre_fd(a))=='\0')
 		{
-			fprintf(file, "%c_%d -- %d;\n", arbre_carRacine(a), arbre_frequenceRacine(a), arbre_frequenceRacine(arbre_fd(a)));
+			fprintf(file, "\"%c %d\" -- \"%d (%u)\";\n", arbre_carRacine(a), arbre_frequenceRacine(a), arbre_frequenceRacine(arbre_fd(a)), (unsigned int)arbre_fd(a));
 		}
 		else if(arbre_carRacine(a)!='\0' && arbre_carRacine(arbre_fd(a))!='\0')
 		{
-			fprintf(file, "%c_%d -- %c_%d;\n", arbre_carRacine(a), arbre_frequenceRacine(a), arbre_carRacine(arbre_fd(a)), arbre_frequenceRacine(arbre_fd(a)));
+			fprintf(file, "\"%c %d\" -- \"%c %d\";\n", arbre_carRacine(a), arbre_frequenceRacine(a), arbre_carRacine(arbre_fd(a)), arbre_frequenceRacine(arbre_fd(a)));
 		}
 		arbre_parseArbre(arbre_fd(a), file);
 	}

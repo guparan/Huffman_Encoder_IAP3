@@ -13,6 +13,20 @@ bool liste_estVide(ListeArbres l)
 }
 
 
+void liste_afficher(ListeArbres l)
+{
+	if(liste_estVide(l))
+	{
+		printf("Liste vide !\n");
+	}
+	else while(l)
+	{
+		printf("%c : %d \n", l->arbre->c, l->arbre->freq);
+		l=l->suivant;
+	}
+}
+
+
 ListeArbres liste_insererTriArbre(ListeArbres l, Arbre a)
 {
 	/* Si la liste est vide */
