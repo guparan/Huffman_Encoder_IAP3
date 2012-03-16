@@ -51,7 +51,7 @@ void test_analyseFichier(void)
 	Arbre result;
 	FILE* fichier;
 	
-	fichier=fopen("./test.txt", "ro");
+	fichier=fopen("./testCompression", "ro");
 	
 	analyseFichier(fichier, freq);
 	
