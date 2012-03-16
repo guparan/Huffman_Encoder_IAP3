@@ -32,11 +32,13 @@ char* encode(Arbre a, char c)
     courante = chemin;
     while (courante->suivant != NULL) {
         if (courante->suivant->arbre == courante->arbre->fg) {
+            res = realloc(res, (i+1)*sizeof(char));
             res[i] = 0;
             i++;
             courante = courante->suivant;
         }
         else if (courante->suivant->arbre == courante->arbre->fd) {
+            res = realloc(res, (i+1)*sizeof(char));
             res[i] = 1;
             i++;
             courante = courante->suivant;
