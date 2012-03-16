@@ -56,19 +56,24 @@ char decode(Arbre a, char* code)
     char res;
     Arbre courant = a;
     int i = 0;
+    
     while (code[i] != '\0')
     {
         if (code[i] == 0)
         {
             courant = courant->fg;
         }
-        else
+        else  /* si code[i] == 1 */
         {
             courant = courant->fd;
         }
         i++;
     }
-    res = courant->c;
+    
+    if (courant->c)
+    {
+        res = courant->c;
+    }
     
     return res;
 }
