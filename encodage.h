@@ -19,7 +19,7 @@ void analyseFichier(FILE *fp, int freq[256]);
  0 : fils gauche, 1 : fils droit */
 
 
-char** encodage_preEncode(Arbre);
+char** encodage_preEncode(Arbre a, char* construct);
 
 
 /**
