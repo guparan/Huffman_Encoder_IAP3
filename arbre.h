@@ -7,6 +7,10 @@
 #include "bool.h"
 
 
+/**
+ * \struct noeud
+ * \brief structure des noeuds pour les arbres
+ **/
 typedef struct noeud {
 	unsigned char c;
 	int freq;
