@@ -1,12 +1,5 @@
-//
-//  compression.c
-//  Compresseur
-//
-//  Created by Lucas Saurel on 16/03/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #include <stdio.h>
+#include "compression.h"
 
 int tailleFichier(FILE* fp)
 {
@@ -21,4 +14,29 @@ int tailleFichier(FILE* fp)
 float tauxCompression(FILE* init, FILE* comp)
 {
     return (tailleFichier(comp)/tailleFichier(init));
+}
+
+
+FILE* compresse(FILE* input)
+{
+    FILE* output = fopen("fichier_compressé", "w+");
+    int i = 0, freq[256] = {0};
+    analyseFichier(input, freq);
+    Arbre huffman = liste_construitArbre(liste_construitListeArbres(freq));
+    char** codage = encodage_preEncode(huffman, NULL, NULL, NULL);
+    
+    while (codage[i] != NULL)   /* écriture du codage au début du nouveau fichier; nécessaire pour la décompression*/
+    {
+        if (strcmp(codage[i], ""))
+        {
+            fprintf(output, "%d %s\n", i, codage[i]);
+        }
+        i++;
+    }
+    fputs("\n", output);    /* On saute une ligne pour passer au contenu du fichier */
+    
+    /* Ecriture du contenu du fichier après encodage */
+    
+    
+    return output;
 }

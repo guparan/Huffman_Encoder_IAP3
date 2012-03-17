@@ -1,14 +1,7 @@
-//
-//  compression.h
-//  Compresseur
-//
-//  Created by Lucas Saurel on 16/03/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #ifndef Compresseur_compression_h
 #define Compresseur_compression_h
 
+#include "encodage.h"
 
 /**
  * \fn int tailleFichier(FILE*);
@@ -26,6 +19,15 @@ int tailleFichier(FILE*);
  * \param Pointeurs sur le fichier initial et le fichier compressé
  **/
 float tauxCompression(FILE* init, FILE* comp);
+
+
+/**
+ * \fn void compresse(FILE*);
+ * \brief créé un fichier compréssé à partir de celui en paramètre
+ * 
+ * \param fichier à compresser
+ **/
+FILE* compresse(FILE*);
 
 
 #endif
