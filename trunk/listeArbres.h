@@ -3,7 +3,10 @@
 
 #include "arbre.h"
 
-
+/**
+ * \struct element
+ * \brief structure des éléments composants une liste d'arbres
+ **/
 typedef struct element {
 	Arbre arbre;
 	struct element* suivant;
