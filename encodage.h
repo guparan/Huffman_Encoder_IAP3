@@ -2,6 +2,7 @@
 #define __ENCODAGE_H_
 
 #include <stdio.h>
+#include <string.h>
 #include "listeArbres.h"
 
 
@@ -19,7 +20,7 @@ void analyseFichier(FILE *fp, int freq[256]);
  0 : fils gauche, 1 : fils droit */
 
 
-char** encodage_preEncode(Arbre a, char* construct);
+char** encodage_preEncode(Arbre a, char* construct, char** binaire, int* nbFeuillesTraitees);
 
 
 /**
