@@ -22,12 +22,13 @@ float tauxCompression(FILE* init, FILE* comp);
 
 
 /**
- * \fn void compresse(FILE*);
+ * \fn void compresse(FILE*, char*);
  * \brief créé un fichier compréssé à partir de celui en paramètre
  * 
  * \param fichier à compresser
+ * \param nom du fichier de sortie
  **/
-FILE* compresse(FILE*);
+FILE* compresse(FILE*, char*);
 
 
 #endif
