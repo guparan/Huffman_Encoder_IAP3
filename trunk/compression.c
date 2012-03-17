@@ -17,9 +17,9 @@ float tauxCompression(FILE* init, FILE* comp)
 }
 
 
-FILE* compresse(FILE* input)
+FILE* compresse(FILE* input, char* nomFichierComp)
 {
-    FILE* output = fopen("fichier_compressé", "w+");
+    FILE* output = fopen(nomFichierComp, "w+");
     int i = 0, freq[256] = {0};
     analyseFichier(input, freq);
     Arbre huffman = liste_construitArbre(liste_construitListeArbres(freq));
