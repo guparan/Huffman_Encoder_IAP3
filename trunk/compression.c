@@ -11,32 +11,39 @@ int tailleFichier(FILE* fp)
 }
 
 
-float tauxCompression(FILE* init, FILE* comp)
+float tauxCompression(FILE* init, FILE* comp, FILE* codage)
 {
-    return (tailleFichier(comp)/tailleFichier(init));
+    return ((tailleFichier(comp)+tailleFichier(codage))/tailleFichier(init));
 }
 
 
-FILE* compresse(FILE* input, char* nomFichierComp)
+FILE* compresse(FILE* input, char* nomFichier)
 {
-    FILE* output = fopen(nomFichierComp, "w+");
+    FILE *fichierComp = NULL, *fichierCodage = NULL; 
+    char *extensionFichComp = ".comp", *extensionFichCodage = ".huf";
     int i = 0, freq[256] = {0};
     analyseFichier(input, freq);
     Arbre huffman = liste_construitArbre(liste_construitListeArbres(freq));
-    char** codage = encodage_preEncode(huffman, NULL, NULL, NULL);
+    char** codage = encodage_tabCorrespondance(huffman);
     
-    while (codage[i] != NULL)   /* écriture du codage au début du nouveau fichier; nécessaire pour la décompression*/
+    /* Ecriture du codage dans le fichier dédié; nécessaire pour la décompression */
+    fichierCodage = fopen(strcat(nomFichier, extensionFichCodage), "w+");
+    while (codage[i] != NULL)
     {
         if (strcmp(codage[i], ""))
         {
-            fprintf(output, "%d %s\n", i, codage[i]);
+            fprintf(fichierCodage, "%d %s\n", i, codage[i]);
         }
         i++;
     }
-    fputs("\n", output);    /* On saute une ligne pour passer au contenu du fichier */
+    fputs("\n", fichierCodage);    /* On saute une ligne pour passer au contenu du fichier */
     
-    /* Ecriture du contenu du fichier après encodage */
+    /* Ecriture du contenu du fichier compressé */
+    fichierComp = fopen(strcat(nomFichier, extensionFichComp), "w+");
+    /* à faire ... */
     
+    /* Affichage du taux de compression */
+    printf("Taux de compression obtenu: %f", tauxCompression(input, fichierComp, fichierCodage));
     
-    return output;
+    return fichierComp;
 }
