@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "compression.h"
 
-int tailleFichier(FILE* fp)
+int compression_tailleFichier(FILE* fp)
 {
     int res = 0;
     fseek(fp, 0, SEEK_END);
@@ -11,20 +11,22 @@ int tailleFichier(FILE* fp)
 }
 
 
-float tauxCompression(FILE* init, FILE* comp, FILE* codage)
+float compression_tauxCompression(FILE* init, FILE* comp, FILE* codage)
 {
-    return ((tailleFichier(comp)+tailleFichier(codage))/tailleFichier(init));
+    return ((compression_tailleFichier(comp)+compression_tailleFichier(codage))/compression_tailleFichier(init));
 }
 
 
-FILE* compresse(FILE* input, char* nomFichier)
+FILE* compression_compresse(FILE* input, char* nomFichier)
 {
     FILE *fichierComp = NULL, *fichierCodage = NULL; 
+    Arbre huffman;
+    char** codage;
     char *extensionFichComp = ".comp", *extensionFichCodage = ".huf";
     int i = 0, freq[256] = {0};
-    analyseFichier(input, freq);
-    Arbre huffman = liste_construitArbre(liste_construitListeArbres(freq));
-    char** codage = encodage_tabCorrespondance(huffman);
+    encodage_analyseFichier(input, freq);
+    huffman = liste_construitArbre(liste_construitListeArbres(freq));
+    codage = encodage_tabCorrespondance(huffman);
     
     /* Ecriture du codage dans le fichier dédié; nécessaire pour la décompression */
     fichierCodage = fopen(strcat(nomFichier, extensionFichCodage), "w+");
@@ -42,7 +44,7 @@ FILE* compresse(FILE* input, char* nomFichier)
     /* à faire ... */
     
     /* Affichage du taux de compression */
-    printf("Taux de compression obtenu: %f", tauxCompression(input, fichierComp, fichierCodage));
+    printf("Taux de compression obtenu: %f", compression_tauxCompression(input, fichierComp, fichierCodage));
     
     return fichierComp;
 }

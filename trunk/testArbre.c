@@ -59,7 +59,7 @@ void test_insererTriArbre(void)
 }
 
 
-void test_analyseFichierConstruitArbre(void)
+void test_encodage_analyseFichierConstruitArbre(void)
 {
 	int freq[256]={0};
 	ListeArbres liste;
@@ -68,7 +68,7 @@ void test_analyseFichierConstruitArbre(void)
 	
 	fichier=fopen("./testCompression", "ro");
 	
-	analyseFichier(fichier, freq);
+	encodage_analyseFichier(fichier, freq);
 	
 	liste=liste_construitListeArbres(freq);
 	
@@ -92,7 +92,7 @@ void test_encode(void)
 	FILE* fichier;
 	
 	fichier=fopen("./testCompression", "ro");	
-	analyseFichier(fichier, freq);	
+	encodage_analyseFichier(fichier, freq);	
 	liste=liste_construitListeArbres(freq);	
 	result=liste_construitArbre(liste);
 
@@ -117,14 +117,14 @@ void test_decode(void)
 	
 	fichier=fopen("./testCompression", "ro");
     
-    analyseFichier(fichier, freq);
+    encodage_analyseFichier(fichier, freq);
 		
 	result=liste_construitArbre(liste_construitListeArbres(freq));
     
-    printf("Le code correspond au caractère : %d\n", decode_arbre(result, "10010"));
+    printf("Le code correspond au caractère : %d\n", encodage_decodeArbre(result, "10010"));
     
 	binaire = encodage_tabCorrespondance(result);    
-	printf("Test u : %c\n", decode(binaire, encode(binaire, 'u')));	
+	printf("Test u : %c\n", encodage_decode(binaire, encodage_encode(binaire, 'u')));	
 }
 
  

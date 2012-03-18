@@ -1,6 +1,6 @@
 #include "encodage.h"
 
-void analyseFichier(FILE *fp, int freq[256])
+void encodage_analyseFichier(FILE *fp, int freq[256])
 {
 	int caractereActuel = 0;
 	
@@ -94,13 +94,13 @@ char** encodage_tabCorrespondance(Arbre a)
 }
 
 
-char* encode(char** tabCorrespondance, char c)
+char* encodage_encode(char** tabCorrespondance, char c)
 {		
 	return tabCorrespondance[(int)c];
 }
 
 
-char decode_arbre(Arbre a, char* code)
+char encodage_decodeArbre(Arbre a, char* code)
 {
     char res = '\0';
     Arbre courant = a;
@@ -134,7 +134,7 @@ char decode_arbre(Arbre a, char* code)
 }
 
 
-char decode(char** tabCorres, char* code)
+char encodage_decode(char** tabCorres, char* code)
 {
 	int i=0;
 	while(tabCorres[i]!=NULL)

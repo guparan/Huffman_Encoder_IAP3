@@ -3,7 +3,7 @@
 #include <string.h>
 #include "decompression.h"
 
-FILE* decompresse(char* nomFichier)
+FILE* decompression_decompresse(char* nomFichier)
 {
     FILE *fichierComp = NULL, *fichierCodage = NULL, *fichierDecomp = NULL;
     char *extensionFichComp = ".comp", *extensionFichCodage = ".huf", *buffer = NULL;
