@@ -20,17 +20,21 @@ float tauxCompression(FILE* init, FILE* comp, FILE* codage)
 FILE* compresse(FILE* input, char* nomFichier)
 {
     FILE *fichierComp = NULL, *fichierCodage = NULL; 
-    char *extensionFichComp = ".comp", *extensionFichCodage = ".tabfreq";
-    int i, freq[256] = {0};
+    char *extensionFichComp = ".comp", *extensionFichCodage = ".huf";
+    int i = 0, freq[256] = {0};
     analyseFichier(input, freq);
     Arbre huffman = liste_construitArbre(liste_construitListeArbres(freq));
     char** codage = encodage_tabCorrespondance(huffman);
     
-    /* Ecriture de la table des fréquences dans le fichier dédié; nécessaire pour la décompression */
+    /* Ecriture du codage dans le fichier dédié; nécessaire pour la décompression */
     fichierCodage = fopen(strcat(nomFichier, extensionFichCodage), "w+");
-    for (i=0; i<256; i++)
+    while (codage[i] != NULL)
     {
-        fprintf(fichierCodage, "%d %d\n", i, freq[i]);
+        if (strcmp(codage[i], ""))
+        {
+            fprintf(fichierCodage, "%d %s\n", i, codage[i]);
+        }
+        i++;
     }
     
     /* Ecriture du contenu du fichier compressé */
