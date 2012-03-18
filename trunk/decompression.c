@@ -7,12 +7,13 @@
 FILE* decompression_decompresse(char* nomFichier)
 {
     FILE *fichierComp = NULL, *fichierCodage = NULL, *fichierDecomp = NULL;
-    char *extensionFichComp = ".comp", *extensionFichCodage = ".huf", *buffer = NULL;
+    char *nomFichierCodage = nomFichier, *extensionFichComp = ".comp", *extensionFichCodage = ".huf", *buffer = NULL;
     int caractereActuel = 0, i = 0, j = 0;
      char** tabCorrespondance = malloc(256*sizeof(char*));
     
-    fichierCodage = fopen(strcat(nomFichier, extensionFichCodage), "r");
-    if (fichierComp == NULL)
+    realloc(nomFichierCodage, strlen(nomFichierCodage)+strlen(extensionFichComp)+1);
+    fichierCodage = fopen(strcat(nomFichierCodage, extensionFichCodage), "r");
+    if (fichierCodage == NULL)
     {
         perror("fopen");
         exit(errno);
@@ -43,7 +44,13 @@ FILE* decompression_decompresse(char* nomFichier)
     fclose(fichierCodage);
     
     /* Décompression du fichier */
+    realloc(nomFichier, strlen(nomFichier)+strlen(extensionFichComp)+1);
     fichierComp = fopen(strcat(nomFichier, extensionFichComp), "rb");
+    if (fichierComp == NULL)
+    {
+        perror("fopen");
+        exit(errno);
+    }
     fichierDecomp = fopen(nomFichier, "wb+");
     
     /* .... */

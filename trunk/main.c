@@ -24,7 +24,7 @@ void menuCompresseur()
     
     while (input != 9)
     {
-        printf(" === Solveur de Sudoku === \n1. Compresser un fichier\n2. Décompresser un fichier\n\n9. Quitter\n\n");
+        printf(" === Progrmma de compression/décompression de fichiers === \n1. Compresser un fichier\n2. Décompresser un fichier\n\n9. Quitter\n\n");
         scanf("%s", &choix);
         sscanf(choix, "%d", &input);
         
@@ -54,11 +54,9 @@ void menuCompresseur()
 }
 
 
-/*
+
 int main (int argc, const char * argv[])
 {
-    
-    
+    mebnuCompresseur();
     return 0;
 }
-*/

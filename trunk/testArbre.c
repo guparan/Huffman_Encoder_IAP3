@@ -114,8 +114,10 @@ void test_decode(void)
 }
 
  
+/*
 int main (void)
 {
 	test_encode();
 	return 0;
 }
+*/
