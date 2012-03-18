@@ -106,9 +106,7 @@ void test_decode(void)
 void test_encode(void)
 {	
 	char** binaire;
-	char* construct=NULL;
-	int nb=0, i;
-	int* nbFeuillesTraitees=&nb;
+	int i;
 	int freq[256]={0};
 	ListeArbres liste;
 	Arbre result;
@@ -122,18 +120,12 @@ void test_encode(void)
 	
 	result=liste_construitArbre(liste);
 	
-	binaire=(char**)malloc(256*sizeof(char*));
-	for(i=0;i<256;++i)
-	{
-		binaire[i]="\0";
-	}
 	/*
 	construct=malloc(512);
 	bit=malloc(512);
 	strcpy(construct, "coucou");
 	*/
-	construct=(char*)malloc(1*sizeof(char)+1);
-	strcpy(construct, " ");
+	
 	
 	/*
 	construct=(char*)realloc(construct, strlen(construct)+1+1);	
@@ -147,9 +139,12 @@ void test_encode(void)
 	printf("construct : %s \n", construct);
 	*/
 
-	binaire = encodage_preEncode(result, arbre_nbFeuilles(result), construct, binaire, nbFeuillesTraitees, 0);
+	binaire = encodage_tabCorrespondance(result);
 	
-	printf("Binaire correspondant a la lettre F : %s\n", encode('F', binaire));
+	for(i=0;i<256;++i)
+	{
+		printf("Caractere %d : %s\n", i, binaire[i]);
+	}
 	
 }
 
