@@ -14,6 +14,7 @@
  * \file op_bits.c
  **/
 
+
 void my_display(unsigned char c, int f)
 {
 	if(c!='\0')	printf("%c=", c);
@@ -58,7 +59,7 @@ void test_insererTriArbre(void)
 }
 
 
-void test_analyseFichier(void)
+void test_analyseFichierConstruitArbre(void)
 {
 	int freq[256]={0};
 	ListeArbres liste;
@@ -81,9 +82,29 @@ void test_analyseFichier(void)
 }
 
 
-void test_construitArbre(void)
-{
+void test_encode(void)
+{	
+	char** binaire;
+	int i=0;
+	int freq[256]={0};
+	ListeArbres liste;
+	Arbre result;
+	FILE* fichier;
 	
+	fichier=fopen("./testCompression", "ro");	
+	analyseFichier(fichier, freq);	
+	liste=liste_construitListeArbres(freq);	
+	result=liste_construitArbre(liste);
+
+	binaire = encodage_tabCorrespondance(result);
+	
+	/*for(i=0;i<256;++i)*/
+	while(binaire[i]!=NULL)
+	{
+		/* strcmp retourne 0 si match */
+		if(strcmp(binaire[i],"")!=0) printf("%d : %s\n", i, binaire[i]);
+		++i;
+	}	
 }
 
 
@@ -100,52 +121,6 @@ void test_decode(void)
 	result=liste_construitArbre(liste_construitListeArbres(freq));
     
     printf("Le code correspond au caractère : %d\n", decode(result, "10010"));
-}
-
-
-void test_encode(void)
-{	
-	char** binaire;
-	int i;
-	int freq[256]={0};
-	ListeArbres liste;
-	Arbre result;
-	FILE* fichier;
-	
-	fichier=fopen("./testCompression", "ro");
-	
-	analyseFichier(fichier, freq);
-	
-	liste=liste_construitListeArbres(freq);
-	
-	result=liste_construitArbre(liste);
-	
-	/*
-	construct=malloc(512);
-	bit=malloc(512);
-	strcpy(construct, "coucou");
-	*/
-	
-	
-	/*
-	construct=(char*)realloc(construct, strlen(construct)+1+1);	
-	strcat(construct, "0");	
-	construct=(char*)realloc(construct, strlen(construct)+1+1);	
-	strcat(construct, "1");	
-	construct=(char*)realloc(construct, strlen(construct)+1+1);	
-	strcat(construct, "0");
-	construct=(char*)realloc(construct, strlen(construct)+1+1);	
-	strcat(construct, "0");	
-	printf("construct : %s \n", construct);
-	*/
-
-	binaire = encodage_tabCorrespondance(result);
-	
-	for(i=0;i<256;++i)
-	{
-		printf("Caractere %d : %s\n", i, binaire[i]);
-	}
-	
 }
 
  
