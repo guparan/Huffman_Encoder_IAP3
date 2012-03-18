@@ -143,6 +143,7 @@ char decode(char** tabCorres, char* code)
 		{
 			return (char)i;
 		}
+		i++;
 	}
 	fprintf(stderr, "Erreur de decodage : code introuvable");
 	exit(-1);

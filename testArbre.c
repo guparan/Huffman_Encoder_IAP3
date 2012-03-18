@@ -104,7 +104,7 @@ void test_encode(void)
 		/* strcmp retourne 0 si match */
 		if(strcmp(binaire[i],"")!=0) printf("%d : %s\n", i, binaire[i]);
 		++i;
-	}	
+	}
 }
 
 
@@ -112,6 +112,7 @@ void test_decode(void)
 {
     int freq[256]={0};
 	Arbre result;
+	char** binaire;
 	FILE* fichier;
 	
 	fichier=fopen("./testCompression", "ro");
@@ -120,7 +121,10 @@ void test_decode(void)
 		
 	result=liste_construitArbre(liste_construitListeArbres(freq));
     
-    printf("Le code correspond au caractère : %d\n", decode(result, "10010"));
+    printf("Le code correspond au caractère : %d\n", decode_arbre(result, "10010"));
+    
+	binaire = encodage_tabCorrespondance(result);    
+	printf("Test u : %c\n", decode(binaire, encode(binaire, 'u')));	
 }
 
  
