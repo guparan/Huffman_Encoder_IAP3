@@ -20,12 +20,6 @@ void analyseFichier(FILE *fp, int freq[256]);
  0 : fils gauche, 1 : fils droit */
 
 
-char** encodage_construitTabCorres(Arbre a, int nbFeuilles, char* construct, char** binaire, int* nbFeuillesTraitees);
-
-
-char** encodage_tabCorrespondance(Arbre a);
-
-
 /**
  * \fn char* encode(char c, char** tabCorrespondance);
  * \brief Retourne la séquence de bits du code de Huffman correspondant au caractère en paramètre
@@ -33,7 +27,7 @@ char** encodage_tabCorrespondance(Arbre a);
  * \param caractère à coder
  * \param tableau des correspondances ASCII / codage à utiliser
  **/
-char* encode(char, char**);
+char* encode(Arbre a, char c);
 
 
 /**

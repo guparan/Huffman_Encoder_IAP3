@@ -106,6 +106,7 @@ void test_decode(void)
 void test_encode(void)
 {	
 	char** binaire;
+	char* bit;
 	int i;
 	int freq[256]={0};
 	ListeArbres liste;
@@ -138,14 +139,20 @@ void test_encode(void)
 	strcat(construct, "0");	
 	printf("construct : %s \n", construct);
 	*/
-
+/*
 	binaire = encodage_tabCorrespondance(result);
 	
 	for(i=0;i<256;++i)
 	{
 		printf("Caractere %d : %s\n", i, binaire[i]);
-	}
+	}*/
 	
+	printf("encode u : %s\n", encode(result, 'u'));
+	encode(result, 'u');
+	/*
+	bit=(char*)malloc(512);
+	strcpy(bit, "0");
+	strcat(bit, strcat(bit, strcat(bit, "")));*/
 }
 
  
