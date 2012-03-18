@@ -13,7 +13,7 @@
  * \param fp pointeur sur un fichier déjà ouvert avant d'appeler la fonction
  * \param freq pointeur sur un tableau de 256 entiers initialisés à 0
  **/
-void encodage_analyseFichier(FILE *fp, int freq[256]);
+int encodage_analyseFichier(FILE *fp, int freq[256]);
 
 
 /* Pour le codage lors de la lecture de l'arbre:

@@ -1,7 +1,10 @@
 #ifndef compression_compresseur_compression_h
 #define compression_compresseur_compression_h
 
+#include <stdio.h>
+#include <errno.h>
 #include "encodage.h"
+#include "op_bits.c"
 
 /**
  * \fn int compression_tailleFichier(FILE*);
@@ -30,7 +33,7 @@ float compression_tauxCompression(FILE* init, FILE* comp, FILE* codage);
  * \param fichier à compression_compresser
  * \param nom du fichier
  **/
-FILE* compression_compresse(FILE*, char*);
+FILE* compression_compresse(char*);
 
 
 #endif

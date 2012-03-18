@@ -9,7 +9,7 @@ all: $(EXE)
 %.o: %.c
 	$(CXX) -c $(CXXFLAGS) $<
 
-testArbre: arbre.o listeArbres.o encodage.o testArbre.o compression.o decompression.o
+testArbre: arbre.o listeArbres.o encodage.o compression.o decompression.o testArbre.o 
 	$(CXX) -o $@ $(LDFLAGS) $+
 clean: 
 	rm -f $(EXE) *.o
