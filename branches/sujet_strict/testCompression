@@ -1,0 +1,3 @@
+#include "arbre.h"
+
+Arbre arbre_creerFeuille(unsigned char c, int freq)
