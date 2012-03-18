@@ -102,9 +102,60 @@ void test_decode(void)
     printf("Le code correspond au caractère : %d\n", decode(result, "10010"));
 }
 
+
+void test_encode(void)
+{	
+	char** binaire;
+	char* construct=NULL;
+	int nb=0, i;
+	int* nbFeuillesTraitees=&nb;
+	int freq[256]={0};
+	ListeArbres liste;
+	Arbre result;
+	FILE* fichier;
+	
+	fichier=fopen("./testCompression", "ro");
+	
+	analyseFichier(fichier, freq);
+	
+	liste=liste_construitListeArbres(freq);
+	
+	result=liste_construitArbre(liste);
+	
+	binaire=(char**)malloc(256*sizeof(char*));
+	for(i=0;i<256;++i)
+	{
+		binaire[i]="\0";
+	}
+	/*
+	construct=malloc(512);
+	bit=malloc(512);
+	strcpy(construct, "coucou");
+	*/
+	construct=(char*)malloc(1*sizeof(char)+1);
+	strcpy(construct, " ");
+	
+	/*
+	construct=(char*)realloc(construct, strlen(construct)+1+1);	
+	strcat(construct, "0");	
+	construct=(char*)realloc(construct, strlen(construct)+1+1);	
+	strcat(construct, "1");	
+	construct=(char*)realloc(construct, strlen(construct)+1+1);	
+	strcat(construct, "0");
+	construct=(char*)realloc(construct, strlen(construct)+1+1);	
+	strcat(construct, "0");	
+	printf("construct : %s \n", construct);
+	*/
+
+	binaire = encodage_preEncode(result, arbre_nbFeuilles(result), construct, binaire, nbFeuillesTraitees, 0);
+	
+	printf("Binaire correspondant a la lettre F : %s\n", encode('F', binaire));
+	
+}
+
  
 int main (void)
 {
-	test_decode();
+	test_encode();
 	return 0;
 }
