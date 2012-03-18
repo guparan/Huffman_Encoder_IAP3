@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
 #include "decompression.h"
 
 FILE* decompression_decompresse(char* nomFichier)
@@ -9,7 +5,7 @@ FILE* decompression_decompresse(char* nomFichier)
     FILE *fichierComp = NULL, *fichierCodage = NULL, *fichierDecomp = NULL;
     char *nomFichierCodage = nomFichier, *extensionFichComp = ".comp", *extensionFichCodage = ".huf", *buffer = NULL;
     int caractereActuel = 0, i = 0, j = 0;
-     char** tabCorrespondance = malloc(256*sizeof(char*));
+    char **tabCorrespondance = malloc(256*sizeof(char*)), **tabContenuFichier = NULL;
     
     realloc(nomFichierCodage, strlen(nomFichierCodage)+strlen(extensionFichComp)+1);
     fichierCodage = fopen(strcat(nomFichierCodage, extensionFichCodage), "r");
@@ -19,7 +15,7 @@ FILE* decompression_decompresse(char* nomFichier)
         exit(errno);
     }
     
-   /* Création de la table d'association ASCII / codage à utiliser (obtenue par lecture de l'entête du fichier input)*/
+   /* Création de la table d'association ASCII / codage à utiliser */
         
     while (caractereActuel != EOF)
     {
@@ -43,7 +39,9 @@ FILE* decompression_decompresse(char* nomFichier)
     
     fclose(fichierCodage);
     
+    
     /* Décompression du fichier */
+    
     realloc(nomFichier, strlen(nomFichier)+strlen(extensionFichComp)+1);
     fichierComp = fopen(strcat(nomFichier, extensionFichComp), "rb");
     if (fichierComp == NULL)
@@ -51,12 +49,40 @@ FILE* decompression_decompresse(char* nomFichier)
         perror("fopen");
         exit(errno);
     }
-    fichierDecomp = fopen(nomFichier, "wb+");
     
-    /* .... */
+    tabContenuFichier = (char**)malloc(((compression_tailleFichier(fichierComp)/8)+1)*sizeof(char*));
     
+    i = 0;
+    caractereActuel = 0;    /* Réinitialisation de caractereActuel et de i */
+    
+    /* On place le contenu du fichier (en binaire) dans le tableau tabContenuFichier */
+    
+    while (caractereActuel != EOF)
+    {
+        tabContenuFichier[i] = (char*)malloc(8*sizeof(char));
+        for (j=0; j<8; j++)
+        {
+            caractereActuel = fgetc(fichierComp);
+            tabContenuFichier[i][j] = caractereActuel;
+        }
+        i++;
+    }
+    tabContenuFichier[i] = (char*)malloc(8*sizeof(char));
+    tabContenuFichier[i] = NULL;
+    i = 0;  /* Réinitialisation de i */
+    
+    
+    /* On remplit le fichier décompressé */
+    fichierDecomp = fopen(nomFichier, "w+");
+
+    while (tabContenuFichier[i] != NULL)
+    {
+        fputc(encodage_decode(tabCorrespondance, tabContenuFichier[i]), fichierDecomp);
+        i++;
+    }
+    
+    free(tabContenuFichier);
     fclose(fichierComp);
-    
     
     return fichierDecomp;
 }

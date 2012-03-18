@@ -57,6 +57,6 @@ void menuCompresseur()
 
 int main (int argc, const char * argv[])
 {
-    mebnuCompresseur();
+    menuCompresseur();
     return 0;
 }
