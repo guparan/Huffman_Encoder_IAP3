@@ -55,29 +55,36 @@ char** encodage_construitTabCorres(Arbre a, int nbFeuilles, char* construct, cha
 	if(arbre_estFeuille(a))
 	{		
 		construct_cpy[i]='\0';
-		binaire[a->c]=(char*)malloc(strlen(construct_cpy));
-		strcpy(binaire[a->c], construct_cpy);		
+		binaire[arbre_carRacine(a)]=(char*)malloc(strlen(construct_cpy));
+		strcpy(binaire[arbre_carRacine(a)], construct_cpy);		
 		(*nbFeuillesTraitees)++;
 	}
 	else
 	{
-		if(a->fg)
+		if(arbre_fg(a))
 		{
 			/* rajouter un 0 a construct et descendre dans le fils gauche */
 			construct_cpy[i]='0';
 			construct_cpy[i+1]='\0';
-			encodage_construitTabCorres(a->fg, nbFeuilles, construct_cpy, binaire, nbFeuillesTraitees);
+			encodage_construitTabCorres(arbre_fg(a), nbFeuilles, construct_cpy, binaire, nbFeuillesTraitees);
 		}
-		if(a->fd)
+		if(arbre_fd(a))
 		{
 			/* rajouter un 1 a construct et descendre dans le fils droit */
 			construct_cpy[i]='1';
 			construct_cpy[i+1]='\0';
-			encodage_construitTabCorres(a->fd, nbFeuilles, construct_cpy, binaire, nbFeuillesTraitees);
+			encodage_construitTabCorres(arbre_fd(a), nbFeuilles, construct_cpy, binaire, nbFeuillesTraitees);
 		}
 	}	
 	
-	if((*nbFeuillesTraitees)==nbFeuilles) return binaire;
+	if((*nbFeuillesTraitees)==nbFeuilles)
+	{
+		printf("coucou\n");
+		/*free(nbFeuillesTraitees);*/
+		free(construct_cpy);
+		/*free(construct);*/
+		return binaire;
+	}
 }
 
 
