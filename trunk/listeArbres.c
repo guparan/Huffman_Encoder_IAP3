@@ -92,7 +92,6 @@ ListeArbres liste_construitListeArbres(int freq[256])
             j++;
         }
     }
-    printf("%d feuilles ?\n", j);
     return liste;
 }
 

@@ -24,12 +24,13 @@ char** encodage_construitTabCorres(Arbre a, int nbFeuilles, char* construct, cha
 	/* Controle des arguments */
 	if(!binaire)
 	{
-		binaire=(char**)malloc(256*sizeof(char*));
+		binaire=(char**)malloc(256*sizeof(char*)+1);
 		for(j=0;j<256;++j)
 		{
 			binaire[j]=(char*)malloc(sizeof(char));
-			binaire[j]="\0";
+			strcpy(binaire[j],"");
 		}
+		binaire[256]=NULL;
 	}
 	if(!nbFeuillesTraitees)
 	{
@@ -55,8 +56,8 @@ char** encodage_construitTabCorres(Arbre a, int nbFeuilles, char* construct, cha
 	if(arbre_estFeuille(a))
 	{		
 		construct_cpy[i]='\0';
-		binaire[arbre_carRacine(a)]=(char*)malloc(strlen(construct_cpy));
-		strcpy(binaire[arbre_carRacine(a)], construct_cpy);		
+		binaire[arbre_carRacine(a)]=(char*)realloc(binaire[arbre_carRacine(a)],strlen(construct_cpy)+1);
+		strcpy(binaire[arbre_carRacine(a)], construct_cpy);
 		(*nbFeuillesTraitees)++;
 	}
 	else
@@ -79,7 +80,6 @@ char** encodage_construitTabCorres(Arbre a, int nbFeuilles, char* construct, cha
 	
 	if((*nbFeuillesTraitees)==nbFeuilles)
 	{
-		printf("coucou\n");
 		/*free(nbFeuillesTraitees);*/
 		free(construct_cpy);
 		/*free(construct);*/
@@ -94,13 +94,13 @@ char** encodage_tabCorrespondance(Arbre a)
 }
 
 
-char* encode(char c, char** tabCorrespondance)
+char* encode(char** tabCorrespondance, char c)
 {		
 	return tabCorrespondance[(int)c];
 }
 
 
-char decode(Arbre a, char* code)
+char decode_arbre(Arbre a, char* code)
 {
     char res = '\0';
     Arbre courant = a;
@@ -131,4 +131,19 @@ char decode(Arbre a, char* code)
     
     
     return res;
+}
+
+
+char decode(char** tabCorres, char* code)
+{
+	int i=0;
+	while(tabCorres[i]!=NULL)
+	{
+		if(strcmp(tabCorres[i], code)==0)
+		{
+			return (char)i;
+		}
+	}
+	fprintf(stderr, "Erreur de decodage : code introuvable");
+	exit(-1);
 }

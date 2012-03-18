@@ -33,7 +33,7 @@ char** encodage_tabCorrespondance(Arbre a);
  * \param caractère à coder
  * \param tableau des correspondances ASCII / codage à utiliser
  **/
-char* encode(char, char**);
+char* encode(char**, char);
 
 
 /**
@@ -43,7 +43,10 @@ char* encode(char, char**);
  * \param a arbre de Huffman à parcourir pour décoder
  * \param code séquence de bits à décoder
  **/
-char decode(Arbre a, char* code);
+char decode_arbre(Arbre a, char* code);
+
+
+char decode(char**, char*);
 
 
 #endif
