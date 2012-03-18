@@ -1,19 +1,5 @@
 #include "encodage.h"
 
-/**
- * \file testArbre.c
- * \author Guillaume PARAN & Lucas SAUREL
- * \brief Divers tests de fonctions
- **/
-
-/**
- * \file arbre.c
- * \file listeArbres.c
- * \file encodage.c
- * \file compression.c
- * \file op_bits.c
- **/
-
 
 void my_display(unsigned char c, int f)
 {

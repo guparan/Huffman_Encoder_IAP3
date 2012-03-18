@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include "decompression.h"
 
 FILE* decompression_decompresse(char* nomFichier)
@@ -11,6 +12,11 @@ FILE* decompression_decompresse(char* nomFichier)
      char** tabCorrespondance = malloc(256*sizeof(char*));
     
     fichierCodage = fopen(strcat(nomFichier, extensionFichCodage), "r");
+    if (fichierComp == NULL)
+    {
+        perror("fopen");
+        exit(errno);
+    }
     
    /* Création de la table d'association ASCII / codage à utiliser (obtenue par lecture de l'entête du fichier input)*/
         
@@ -37,8 +43,8 @@ FILE* decompression_decompresse(char* nomFichier)
     fclose(fichierCodage);
     
     /* Décompression du fichier */
-    fichierComp = fopen(strcat(nomFichier, extensionFichComp), "r");
-    fichierDecomp = fopen(nomFichier, "w+");
+    fichierComp = fopen(strcat(nomFichier, extensionFichComp), "rb");
+    fichierDecomp = fopen(nomFichier, "wb+");
     
     /* .... */
     
