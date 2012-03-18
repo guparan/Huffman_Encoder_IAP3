@@ -11,92 +11,50 @@ void analyseFichier(FILE *fp, int freq[256])
 	}
 }
 
-
-/* Parcours de l'arbre
- * construction d'une chaine de 1 et 0
- * a chaque car rencontré, copie de la chaine à l'indice ASCII 
- * retourne le tableau des chaines */
-char** encodage_construitTabCorres(Arbre a, int nbFeuilles, char* construct, char** binaire, int* nbFeuillesTraitees)
-{
-	char* construct_cpy;	
-	int i=0, j=0;
-	
-	/* Controle des arguments */
-	if(!binaire)
-	{
-		binaire=(char**)malloc(256*sizeof(char*));
-		for(j=0;j<256;++j)
-		{
-			binaire[j]=(char*)malloc(sizeof(char));
-			binaire[j]="\0";
-		}
-	}
-	if(!nbFeuillesTraitees)
-	{
-		nbFeuillesTraitees=(int*)malloc(sizeof(int));
-		(*nbFeuillesTraitees)=0;
-	}
-	
-	if(!construct)
-	{
-		construct_cpy=(char*)malloc(1*sizeof(char)+1);
-		strcpy(construct_cpy, "");
-	}
-	else 
-	{
-		construct_cpy=(char*)malloc(strlen(construct)+2);
-		for(i=0 ; construct[i]!='\0' ; ++i)
-		{
-			construct_cpy[i]=construct[i];
-		}
-	}
-	
-	/* Traitement des noeuds */	
-	if(arbre_estFeuille(a))
-	{		
-		construct_cpy[i]='\0';
-		binaire[arbre_carRacine(a)]=(char*)malloc(strlen(construct_cpy));
-		strcpy(binaire[arbre_carRacine(a)], construct_cpy);		
-		(*nbFeuillesTraitees)++;
-	}
-	else
-	{
-		if(arbre_fg(a))
-		{
-			/* rajouter un 0 a construct et descendre dans le fils gauche */
-			construct_cpy[i]='0';
-			construct_cpy[i+1]='\0';
-			encodage_construitTabCorres(arbre_fg(a), nbFeuilles, construct_cpy, binaire, nbFeuillesTraitees);
-		}
-		if(arbre_fd(a))
-		{
-			/* rajouter un 1 a construct et descendre dans le fils droit */
-			construct_cpy[i]='1';
-			construct_cpy[i+1]='\0';
-			encodage_construitTabCorres(arbre_fd(a), nbFeuilles, construct_cpy, binaire, nbFeuillesTraitees);
-		}
-	}	
-	
-	if((*nbFeuillesTraitees)==nbFeuilles)
-	{
-		printf("coucou\n");
-		/*free(nbFeuillesTraitees);*/
-		free(construct_cpy);
-		/*free(construct);*/
-		return binaire;
-	}
-}
-
-
-char** encodage_tabCorrespondance(Arbre a)
-{	
-	return encodage_construitTabCorres(a, arbre_nbFeuilles(a), NULL, NULL, NULL);
-}
-
-
-char* encode(char c, char** tabCorrespondance)
+char* encode(Arbre a, char c)
 {		
-	return tabCorrespondance[(int)c];
+	int i=0;
+	char* bit;
+	char* chaine;
+	
+	if(arbre_estFeuille(a))
+	{
+		if(arbre_carRacine(a)==c) return "";
+		else return "2";
+	}
+	if(arbre_fg(a))
+	{
+		chaine=(char*)malloc(512);
+		bit=(char*)malloc(512);
+		strcpy(bit, "0");
+		chaine=strcat(bit, encode(a->fg, c));
+		while(chaine[i]!='\0')
+		{
+			if(chaine[i]=='2')
+			{
+				break;
+			}
+			else return chaine;
+			i++;
+		}
+	}
+	if(arbre_fd(a))
+	{
+		chaine=(char*)malloc(512);
+		bit=(char*)malloc(512);
+		strcpy(bit, "1");
+		chaine=strcat(bit, encode(a->fd, c));
+		while(chaine[i]!='\0')
+		{
+			if(chaine[i]=='2')
+			{
+				break;
+			}
+			else return chaine;
+			i++;
+		}
+	}
+	
 }
 
 
