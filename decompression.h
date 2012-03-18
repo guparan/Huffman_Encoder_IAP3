@@ -1,14 +1,14 @@
-#ifndef Compresseur_decompression_h
-#define Compresseur_decompression_h
+#ifndef compression_compresseur_decompression_h
+#define compression_compresseur_decompression_h
 
 #include "encodage.h"
 
 /**
- * \fn void decompresse(FILE*, char*);
- * \brief décompresse le fichier en paramètre
+ * \fn void decompression_compresse(FILE*, char*);
+ * \brief décompression_compresse le fichier en paramètre
  * 
- * \param nom du fichier à décompresser SANS L'EXTENSION (.huf ou .comp)
+ * \param nom du fichier à décompression_compresser SANS L'EXTENSION (.huf ou .comp)
  **/
-FILE* decompresse(char*);
+FILE* decompression_decompresse(char*);
 
 #endif
