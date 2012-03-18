@@ -10,6 +10,8 @@ void ecritNiemeBit(unsigned char *buff, unsigned char bit, int n) {
 	} else { /* mise à 0 */
 		buff[nd] = buff[nd] & (~masque);
 	}
+	
+	
 
 	return;
 }

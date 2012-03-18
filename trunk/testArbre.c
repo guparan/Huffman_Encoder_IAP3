@@ -1,4 +1,4 @@
-#include "encodage.h"
+#include "compression.h"
 
 
 void my_display(unsigned char c, int f)
@@ -81,6 +81,8 @@ void test_encode(void)
 	encodage_analyseFichier(fichier, freq);	
 	liste=liste_construitListeArbres(freq);	
 	result=liste_construitArbre(liste);
+	
+	arbre_afficheArbreDot(result, "test");
 
 	binaire = encodage_tabCorrespondance(result);
 	
@@ -113,11 +115,17 @@ void test_decode(void)
 	printf("Test u : %c\n", encodage_decode(binaire, encodage_encode(binaire, 'u')));	
 }
 
+
+void test_compresse(void)
+{
+	compression_compresse("./testCompression");	
+}
+
  
 /*
 int main (void)
 {
-	test_encode();
+	test_compresse();
 	return 0;
 }
 */

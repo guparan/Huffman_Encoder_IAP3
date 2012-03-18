@@ -1,14 +1,19 @@
 #include "encodage.h"
 
-void encodage_analyseFichier(FILE *fp, int freq[256])
+int encodage_analyseFichier(FILE *fp, int freq[256])
 {
 	int caractereActuel = 0;
+	int nbLus=0;
 	
 	while (caractereActuel != EOF)
 	{
 		caractereActuel = fgetc(fp);
 		freq[caractereActuel] += 1;
+		nbLus++;
 	}
+	
+	fseek(fp, 0, SEEK_SET);
+	return nbLus;
 }
 
 
