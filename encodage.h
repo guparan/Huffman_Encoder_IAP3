@@ -27,13 +27,13 @@ char** encodage_tabCorrespondance(Arbre a);
 
 
 /**
- * \fn char* encode(Arbre a, char c);
- * \brief Produit la séquence de bits du code de Huffman (sous forme d'une chaîne de caractères) à partir d'un arbre de Huffman et d'un caractère
+ * \fn char* encode(char c, char** tabCorrespondance);
+ * \brief Retourne la séquence de bits du code de Huffman correspondant au caractère en paramètre
  * 
- * \param a arbre de Huffman à parcourir pour encoder
- * \param c caractère à coder
+ * \param caractère à coder
+ * \param tableau des correspondances ASCII / codage à utiliser
  **/
-char* encode(char c, char** tabCorrespondance);
+char* encode(char, char**);
 
 
 /**

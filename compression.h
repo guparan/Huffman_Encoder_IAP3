@@ -13,12 +13,14 @@ int tailleFichier(FILE*);
 
 
 /**
- * \fn int tauxCompression(FILE* av, FILE* ap);
+ * \fn int tauxCompression(FILE* init, FILE* comp, FILE* codage);
  * \brief Renvoie le taux de compression obtenu
  * 
- * \param Pointeurs sur le fichier initial et le fichier compressé
+ * \param Pointeur sur le fichier initial
+ * \param Pointeur sur le fichier compressé
+ * \param Pointeur sur le fichier contenant le codage utilisé
  **/
-float tauxCompression(FILE* init, FILE* comp);
+float tauxCompression(FILE* init, FILE* comp, FILE* codage);
 
 
 /**
@@ -26,7 +28,7 @@ float tauxCompression(FILE* init, FILE* comp);
  * \brief créé un fichier compréssé à partir de celui en paramètre
  * 
  * \param fichier à compresser
- * \param nom du fichier de sortie
+ * \param nom du fichier
  **/
 FILE* compresse(FILE*, char*);
 

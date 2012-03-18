@@ -5,9 +5,8 @@
  * \fn void decompresse(FILE*, char*);
  * \brief décompresse le fichier en paramètre
  * 
- * \param fichier à décompresser
- * \param nom du fichier de sortie
+ * \param nom du fichier à décompresser SANS L'EXTENSION (.huf ou .comp)
  **/
-FILE* decompresse(FILE*, char*);
+FILE* decompresse(char*);
 
 #endif
