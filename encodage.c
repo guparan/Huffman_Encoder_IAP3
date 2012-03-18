@@ -12,55 +12,73 @@ void analyseFichier(FILE *fp, int freq[256])
 }
 
 
-char** encodage_preEncode(Arbre a, char* construct, char** binaire, int* nbFeuillesTraitees)
+char** encodage_preEncode(Arbre a, int nbFeuilles, char* construct, char** binaire, int* nbFeuillesTraitees, int occurence)
 {
 	/* Parcours de l'arbre
 	 * construction d'une chaine de 1 et 0
 	 * a chaque car rencontré, copie de la chaine à l'indice ASCII 
 	 * retourne le tableau des chaines */
+	char* construct_cpy;	
+	construct_cpy=(char*)malloc(strlen(construct)+1);
+	strcpy(construct_cpy, construct);
+	 
+	printf("construct = %s, nbF = %d \n", construct_cpy, (*nbFeuillesTraitees));
+
 	
-	if(*nbFeuillesTraitees==arbre_nbFeuilles(a))
+	if(!construct)
 	{
-		return binaire;
+		construct_cpy=(char*)malloc(1*sizeof(char));
 	}
-	
-	if(arbre_estFeuille(a))
-	{
-		binaire[a->c]=(char*)malloc(strlen(construct));
-		strcpy(binaire[a->c], construct);
-		(*nbFeuillesTraitees)++;
-		return binaire;
-	}
+	else construct_cpy=(char*)realloc(construct_cpy, strlen(construct)*sizeof(char)+1+1);
 	
 	if(a->fg)
 	{
 		/* rajouter un 0 a construct et descendre dans le fils gauche */
-		strcat(construct, "0");
-		return encodage_preEncode(a->fg, construct, binaire, nbFeuillesTraitees);
+		printf("strcat(construct, 0);\n");
+		/*strcat(construct, "0");*/
+		construct_cpy[occurence]='0';
+		construct_cpy[occurence+1]='\0';
+		encodage_preEncode(a->fg, nbFeuilles, construct_cpy, binaire, nbFeuillesTraitees, occurence+1);
+		
+		if((*nbFeuillesTraitees)==nbFeuilles)
+		{
+			printf("Fin de traitement\n");
+			return binaire;
+		}
 	}
 	if(a->fd)
 	{
 		/* rajouter un 1 a construct et descendre dans le fils droit */
-		strcat(construct, "1");
-		return encodage_preEncode(a->fd, construct, binaire, nbFeuillesTraitees);
+		/*printf("strcat(construct, 1);\n");
+		strcat(construct, "1");*/
+		construct_cpy[occurence]='1';
+		construct_cpy[occurence+1]='\0';
+		encodage_preEncode(a->fd, nbFeuilles, construct_cpy, binaire, nbFeuillesTraitees, occurence+1);
+		
+		if((*nbFeuillesTraitees)==nbFeuilles)
+		{
+			printf("Fin de traitement\n");
+			return binaire;
+		}
 	}
 	
-	return NULL;
+	if(arbre_estFeuille(a))
+	{
+		printf("Feuille !\n");
+		
+		binaire[a->c]=(char*)malloc(strlen(construct_cpy)+1);
+		strcpy(binaire[a->c], construct_cpy);
+		
+		(*nbFeuillesTraitees)++;
+		
+		printf("nbF = %d \n", (*nbFeuillesTraitees));
+	}
 }
 
 
-char* encode(Arbre a, char c)
-{	
-	char** binaire;
-	char* construct="";
-	int nb=0;
-	int* nbFeuillesTraitees=&nb;
-	
-	binaire=(char**)malloc(256*sizeof(char*));
-	
-	binaire = encodage_preEncode(a, construct, binaire, nbFeuillesTraitees);
-	
-	return binaire[(int)c];
+char* encode(char c, char** tabCorrespondance)
+{		
+	return tabCorrespondance[(int)c];
 }
 
 

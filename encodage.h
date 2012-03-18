@@ -20,7 +20,7 @@ void analyseFichier(FILE *fp, int freq[256]);
  0 : fils gauche, 1 : fils droit */
 
 
-char** encodage_preEncode(Arbre a, char* construct, char** binaire, int* nbFeuillesTraitees);
+char** encodage_preEncode(Arbre a, int nbFeuilles, char* construct, char** binaire, int* nbFeuillesTraitees, int occurence);
 
 
 /**
@@ -30,7 +30,7 @@ char** encodage_preEncode(Arbre a, char* construct, char** binaire, int* nbFeuil
  * \param a arbre de Huffman à parcourir pour encoder
  * \param c caractère à coder
  **/
-char* encode(Arbre a, char c);
+char* encode(char c, char** tabCorrespondance);
 
 
 /**
