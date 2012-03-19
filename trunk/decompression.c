@@ -4,7 +4,7 @@ FILE* decompression_decompresse(char* nomFichier)
 {
     FILE *fichierComp = NULL, *fichierCodage = NULL, *fichierDecomp = NULL;
     char *nomFichierCodage = nomFichier, *extensionFichComp = ".comp", *extensionFichCodage = ".huf", *indice = NULL, *frequence = NULL;
-    int caractereActuel = 0, freq[256];
+    int caractereActuel = 0, freq[256] = {0};
     Arbre huffman = NULL, courant = NULL;
     
     
