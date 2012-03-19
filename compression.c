@@ -8,7 +8,7 @@ float compression_tauxCompression(FILE* init, FILE* comp, FILE* codage)
 }
 
 
-FILE* compression_compresse(char* nomFichier)
+void compression_compresse(char* nomFichier)
 {
 	FILE* input;
     FILE *fichierComp = NULL, *fichierCodage = NULL; 
@@ -30,12 +30,12 @@ FILE* compression_compresse(char* nomFichier)
 		exit(errno);
 	}
     
-    /* Init des variables necessaires 
+    /* Init des variables necessaires */
     encodage_analyseFichier(input, freq);
     huffman = liste_construitArbre(liste_construitListeArbres(freq));
-    tabCorres = encodage_tabCorrespondance(huffman);*/
+    tabCorres = encodage_tabCorrespondance(huffman);
     
-    /* TEST */
+    /* TEST 
 		tabCorres=(char**)malloc(256*sizeof(char*)+1);
 		for(j=0;j<256;++j)
 		{
@@ -52,6 +52,7 @@ FILE* compression_compresse(char* nomFichier)
 		freq[115]=1;
     
     huffman = liste_construitArbre(liste_construitListeArbres(freq));
+    */
     
     i=0;
     while(tabCorres[i]!=NULL)
@@ -68,7 +69,7 @@ FILE* compression_compresse(char* nomFichier)
         
     arbre_afficheArbreDot(huffman, "test.dot");
     
-    /* Ecriture du codage dans le fichier dédié; nécessaire pour la décompression */
+    /* Ecriture des frequences dans le fichier dédié, nécessaire pour la décompression */
     nomFichierCodage=(char*)malloc(strlen(nomFichier)+strlen(extensionFichCodage)+1);
     strcpy(nomFichierCodage, nomFichier);
     strcat(nomFichierCodage, extensionFichCodage);
@@ -78,6 +79,8 @@ FILE* compression_compresse(char* nomFichier)
     {
         if(freq[i]!=0) fprintf(fichierCodage, "%d\n%d\n", i, freq[i]);
     }
+    free(nomFichierCodage);
+    fclose(fichierCodage);
     
     /* Creation et ouverture du fichier compresse */
     nomFichierComp=(char*)malloc(strlen(nomFichier)+strlen(extensionFichComp)+1);
@@ -86,7 +89,6 @@ FILE* compression_compresse(char* nomFichier)
     fichierComp = fopen(nomFichierComp, "wb+");
     
     /* On remplit buf avec l'octet correspondant a chaque caractere du fichier lu */
-    /* UN CODE N'EST PAS SUR UN OCTET */
     i=0;
     while((carLu=fgetc(input))!=EOF)
     {
@@ -106,15 +108,13 @@ FILE* compression_compresse(char* nomFichier)
 	printf("\n");
 	for(i=0 ; i<nbBit ; ++i)
 	{
-		printf("%u", buf[i]);
+		afficher_binaire(buf[i]);
 		fputc(buf[i], fichierComp);
 	}
 
     /* Affichage du taux de compression */
     printf("Taux de compression obtenu: %.2f\n", compression_tauxCompression(input, fichierComp, fichierCodage));
     
-    return fichierComp;
-    
-    
+    fclose(fichierComp);
 }
 

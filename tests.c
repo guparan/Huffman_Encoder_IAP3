@@ -69,6 +69,7 @@ void test_encodage_analyseFichierConstruitArbre(void)
 
 void test_encode(void)
 {	
+	
 	char** binaire;
 	int i=0;
 	int freq[256]={0};
@@ -119,7 +120,7 @@ void test_compresse(void)
 {
 	compression_compresse("./grosFichier");	
 	
-	decompression_decompresse("./grosFichier");
+	/*decompression_decompresse("./grosFichier");*/
 }
 
 

@@ -26,7 +26,7 @@ float compression_tauxCompression(FILE* init, FILE* comp, FILE* codage);
  * \param fichier à compression_compresser
  * \param nom du fichier
  **/
-FILE* compression_compresse(char*);
+void compression_compresse(char*);
 
 
 #endif
