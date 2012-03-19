@@ -1,18 +1,10 @@
 #include "compression.h"
 
-int compression_tailleFichier(FILE* fp)
-{
-    int res = 0;
-    fseek(fp, 0, SEEK_END);
-    res = ftell(fp);
-    fseek(fp, 0, SEEK_SET);
-    return res;
-}
 
 
 float compression_tauxCompression(FILE* init, FILE* comp, FILE* codage)
 {
-    return ((compression_tailleFichier(comp)+compression_tailleFichier(codage))/compression_tailleFichier(init));
+    return ((tailleFichier(comp)+tailleFichier(codage))/tailleFichier(init));
 }
 
 

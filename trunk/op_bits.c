@@ -1,3 +1,16 @@
+#include "op_bits.h"
+
+
+int tailleFichier(FILE* fp)
+{
+    int res = 0;
+    fseek(fp, 0, SEEK_END);
+    res = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+    return res;
+}
+
+
 /* n de 0 à 8*(taille buffer) */
 void ecritNiemeBit(unsigned char *buff, unsigned char bit, int n) {
 	int size_char = sizeof(unsigned char)*8;	/* nb bits par int */
@@ -10,12 +23,9 @@ void ecritNiemeBit(unsigned char *buff, unsigned char bit, int n) {
 	} else { /* mise à 0 */
 		buff[nd] = buff[nd] & (~masque);
 	}
-	
-	
 
 	return;
 }
-
 
 
 /* n de 0 à 8*(taille buffer) */

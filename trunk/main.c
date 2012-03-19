@@ -11,12 +11,18 @@
  * \file compression.c
  * \file decompression.c
  * \file op_bits.c
- * \file testArbre.c
+ * \file tests.c
  **/
 
+#include "arbre.h"
+#include "listeArbres.h"
+#include "encodage.h"
+#include "op_bits.h"
 #include "compression.h"
 #include "decompression.h"
+#include "tests.h"
 
+/*
 void menuCompresseur()
 {
     char choix [100], *nomFichier = NULL;
@@ -24,8 +30,8 @@ void menuCompresseur()
     
     while (input != 9)
     {
-        printf(" === Progrmma de compression/décompression de fichiers === \n1. Compresser un fichier\n2. Décompresser un fichier\n\n9. Quitter\n\n");
-        scanf("%s", &choix);
+        printf(" === Programme de compression/décompression de fichiers === \n1. Compresser un fichier\n2. Décompresser un fichier\n\n9. Quitter\n\n");
+        scanf("%s", choix);
         sscanf(choix, "%d", &input);
         
         switch(input)
@@ -52,11 +58,13 @@ void menuCompresseur()
         };
     }
 }
-
+*/
 
 
 int main (int argc, const char * argv[])
 {
-    menuCompresseur();
+	test_compresse();
+	
+    /*menuCompresseur();*/
     return 0;
 }

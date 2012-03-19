@@ -1,6 +1,6 @@
 CXX=gcc
 CXXFLAGS=-Wall -ansi -pedantic
-EXE=testArbre
+EXE=main
 
 all: $(EXE)
 
@@ -9,7 +9,7 @@ all: $(EXE)
 %.o: %.c
 	$(CXX) -c $(CXXFLAGS) $<
 
-testArbre: arbre.o listeArbres.o encodage.o compression.o decompression.o testArbre.o 
+main: arbre.o listeArbres.o encodage.o op_bits.o compression.o decompression.o tests.o
 	$(CXX) -o $@ $(LDFLAGS) $+
 clean: 
 	rm -f $(EXE) *.o
