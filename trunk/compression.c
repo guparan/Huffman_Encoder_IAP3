@@ -35,36 +35,18 @@ void compression_compresse(char* nomFichier)
     huffman = liste_construitArbre(liste_construitListeArbres(freq));
     tabCorres = encodage_tabCorrespondance(huffman);
     
-    /* TEST 
-		tabCorres=(char**)malloc(256*sizeof(char*)+1);
-		for(j=0;j<256;++j)
-		{
-			tabCorres[j]=(char*)malloc(sizeof(char));
-			strcpy(tabCorres[j],"");
-		}
-		tabCorres[256]=NULL;		
-		tabCorres[116]="1";
-		tabCorres[101]="01";
-		tabCorres[115]="00";
-		
-		freq[116]=2;
-		freq[101]=1;
-		freq[115]=1;
-    
-    huffman = liste_construitArbre(liste_construitListeArbres(freq));
-    */
-    
     i=1;
+    /* Calcul du nombre de bits necessaire a l'encodage */
     while(tabCorres[i]!=NULL)
     {
 		if(strcmp(tabCorres[i], "")) 
 		{
-			printf("%d : %s (freq=%d)\n", i, tabCorres[i], freq[i]);
+			/* printf("%d : %s (freq=%d)\n", i, tabCorres[i], freq[i]); */
 			nbBit+=freq[i]*(strlen(tabCorres[i]));
 		}
 		i++;
 	}
-	printf("Nb bits : %d\n", nbBit);
+	/* printf("Nb bits : %d\n", nbBit); */
     buf=(unsigned char*)malloc(nbBit);
         
     arbre_afficheArbreDot(huffman, "test.dot");
@@ -88,27 +70,26 @@ void compression_compresse(char* nomFichier)
     strcat(nomFichierComp, extensionFichComp);
     fichierComp = fopen(nomFichierComp, "wb+");
     
-    /* On remplit buf avec l'octet correspondant a chaque caractere du fichier lu */
+    /* On remplit buf avec les bits correspondants a chaque caractere du fichier lu */
     i=0;
     while((carLu=fgetc(input))!=EOF)
     {
 		codeAssoc=tabCorres[carLu];
 		tailleAssoc=strlen(codeAssoc);
+		printf("Ecriture a la position %d : ", positionCourante);
 		for(j=0 ; j<tailleAssoc ; ++j)
 		{
 			printf("%c", codeAssoc[j]);
 			ecritNiemeBit(buf, codeAssoc[j], positionCourante+j);
 		}
-		/* printf("buf : %s\n", buf[i]); */
-		positionCourante=j;
+		printf("\n");
+		positionCourante+=tailleAssoc;
 		i++;
 	}
         
 	/* On ecrit tous les octets de buf dans le fichier compresse */
-	printf("\n");
 	for(i=0 ; i<nbBit ; ++i)
 	{
-		afficher_binaire(buf[i]);
 		fputc(buf[i], fichierComp);
 	}
 
