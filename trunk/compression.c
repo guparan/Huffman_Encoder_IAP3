@@ -56,12 +56,17 @@ void compression_compresse(char* nomFichier)
     strcpy(nomFichierCodage, nomFichier);
     strcat(nomFichierCodage, extensionFichCodage);
     fichierCodage = fopen(nomFichierCodage, "w+");
+    free(nomFichierCodage);
+    if (fichierCodage == NULL)      /* Test d'ouverture */
+    {
+        perror("fopen");
+        exit(errno);
+    }
     
     for (i=0; i<256; i++)
     {
         if(freq[i]!=0) fprintf(fichierCodage, "%d\n%d\n", i, freq[i]);
     }
-    free(nomFichierCodage);
     fclose(fichierCodage);
     
     /* Creation et ouverture du fichier compresse */
@@ -69,6 +74,12 @@ void compression_compresse(char* nomFichier)
     strcpy(nomFichierComp, nomFichier);
     strcat(nomFichierComp, extensionFichComp);
     fichierComp = fopen(nomFichierComp, "wb+");
+    free(nomFichierComp);
+    if (fichierComp == NULL)      /* Test d'ouverture */
+    {
+        perror("fopen");
+        exit(errno);
+    }
     
     /* On remplit buf avec les bits correspondants a chaque caractere du fichier lu */
     i=0;
@@ -92,7 +103,9 @@ void compression_compresse(char* nomFichier)
 	{
 		fputc(buf[i], fichierComp);
 	}
-
+    
+    free(buf);
+    
     /* Affichage du taux de compression */
     printf("Taux de compression obtenu: %.2f\n", compression_tauxCompression(input, fichierComp, fichierCodage));
     

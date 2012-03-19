@@ -7,7 +7,6 @@ FILE* decompression_decompresse(char* nomFichier)
     char* extensionFichComp = ".comp", *extensionFichCodage = ".huf", *extensionFichDecomp = ".decomp";
     char *indice = NULL;
     char *frequence = NULL;
-    unsigned char caractereActuel;
     unsigned char* buff;
     unsigned char bitLu;
     int freq[256] = {0};
@@ -51,7 +50,7 @@ FILE* decompression_decompresse(char* nomFichier)
     nomFichierComp=(char*)malloc(strlen(nomFichier)+strlen(extensionFichComp)+1);    /* malloc de nomFichierComp pour ajouter l'extension */
     strcpy(nomFichierComp, nomFichier);
     strcat(nomFichierComp, extensionFichComp);
-    fichierComp = fopen(nomFichierComp, "rb");   /* Ouverture du fichier en mode */
+    fichierComp = fopen(nomFichierComp, "r");   /* Ouverture du fichier */
     free(nomFichierComp);
     if (fichierComp == NULL)        /* Test d'ouverture */
     {
@@ -114,6 +113,7 @@ FILE* decompression_decompresse(char* nomFichier)
     printf("\n");
     
     fclose(fichierComp);    /* Fin des opérations sur fichierComp */
+    free(buff);
     free(huffman);  /* On libère la mémoire utilisée par l'arbre de huffman */
     
     return fichierDecomp;
