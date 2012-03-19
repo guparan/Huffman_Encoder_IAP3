@@ -1,7 +1,6 @@
 #ifndef COMPRESSION_H
 #define COMPRESSION_H
 
-#include <stdio.h>
 #include <errno.h>
 #include "encodage.h"
 #include "op_bits.h"
