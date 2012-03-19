@@ -7,8 +7,11 @@ FILE* decompression_decompresse(char* nomFichier)
     char* extensionFichComp = ".comp", *extensionFichCodage = ".huf", *extensionFichDecomp = ".decomp";
     char *indice = NULL;
     char *frequence = NULL;
-    unsigned char caractereActuel; 
+    unsigned char caractereActuel;
+    unsigned char* buff;
+    unsigned char bitLu;
     int freq[256] = {0};
+    int i=0;
     Arbre huffman = NULL, courant = NULL;
     
     
@@ -71,15 +74,32 @@ FILE* decompression_decompresse(char* nomFichier)
     
     /* On lit fichierComp (en binaire) en parcourant l'arbre de huffman et on écrit dans fichierDecomp */
     courant = huffman;  /* On initialise courant en lui affectant huffman */    
-    printf("\nEcriture de : ");
-	caractereActuel = fgetc(fichierComp);   /* lecture du premier caractère */
-    while (!feof(fichierComp))
-    {		
-        if (caractereActuel == '0')
+	buff=(unsigned char*)malloc(tailleFichier(fichierComp));
+	
+	i=0;
+	while(!feof(fichierComp))
+	{
+		buff[i]=fgetc(fichierComp);
+		i++;
+	}
+	/*
+	printf("Buff : ");
+	for(i=0 ; i<tailleFichier(fichierComp) ; ++i)
+	{
+		printf("%c", buff[i]);
+	}
+	printf("\n");
+	*/
+	for(i=0 ; i<tailleFichier(fichierComp) ; ++i)
+	{
+		bitLu = litNiemeBit(buff, i);
+		printf("Bit lu : %c\n", bitLu);
+		
+        if (bitLu == '0')
         {
             courant = arbre_fg(courant);
         }
-        else if (caractereActuel == '1')
+        else if (bitLu == '1')
         {
             courant = arbre_fd(courant);
         }
@@ -90,7 +110,6 @@ FILE* decompression_decompresse(char* nomFichier)
             fputc(arbre_carRacine(courant), fichierDecomp);
             courant = huffman;
         }
-        caractereActuel = fgetc(fichierComp);
     }
     printf("\n");
     

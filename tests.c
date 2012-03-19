@@ -120,13 +120,5 @@ void test_compresse(void)
 {
 	compression_compresse("./grosFichier");	
 	
-	/*decompression_decompresse("./grosFichier");*/
-}
-
-
-void test_ecritNiemeBit(void)
-{
-	unsigned char* buf;
-	
-	
+	decompression_decompresse("./grosFichier");
 }
