@@ -1,18 +1,11 @@
-#ifndef compression_compresseur_compression_h
-#define compression_compresseur_compression_h
+#ifndef COMPRESSION_H
+#define COMPRESSION_H
 
 #include <stdio.h>
 #include <errno.h>
 #include "encodage.h"
-#include "op_bits.c"
+#include "op_bits.h"
 
-/**
- * \fn int compression_tailleFichier(FILE*);
- * \brief Renvoie la taille du fichier en paramètre (fichier préalablement ouvert)
- * 
- * \param Pointeur sur le fichier à mesurer
- **/
-int compression_tailleFichier(FILE*);
 
 
 /**

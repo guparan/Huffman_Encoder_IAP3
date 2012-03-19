@@ -57,14 +57,10 @@ unsigned char arbre_carRacine(Arbre a)
 	return a->c;
 }
 
-/* precondition : l'arbre est un ABR */
+
 int arbre_nbFeuilles(Arbre a)
 {
-	if(arbre_estVide(arbre_fg(a)) && arbre_estVide(arbre_fd(a)))
-	{
-		return 1;
-	}
-	else return arbre_nbFeuilles(arbre_fg(a))+arbre_nbFeuilles(arbre_fd(a));
+	return arbre_frequenceRacine(a);
 }
 
 

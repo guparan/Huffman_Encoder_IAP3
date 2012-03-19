@@ -50,7 +50,7 @@ FILE* decompression_decompresse(char* nomFichier)
         exit(errno);
     }
     
-    tabContenuFichier = (char**)malloc(((compression_tailleFichier(fichierComp)/8)+1)*sizeof(char*));
+    tabContenuFichier = (char**)malloc(((tailleFichier(fichierComp)/8)+1)*sizeof(char*));
     
     i = 0;
     caractereActuel = 0;    /* Réinitialisation de caractereActuel et de i */

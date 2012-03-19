@@ -1,5 +1,4 @@
-#include "compression.h"
-
+#include "tests.h"
 
 void my_display(unsigned char c, int f)
 {
@@ -25,7 +24,7 @@ void test_afficheArbre(void)
 	
 	arbre_afficheArbre(arbre_fg(arbre), my_display);
 	
-	arbre_afficheArbreDot(arbre, "test.dot");
+	arbre_afficheArbreDot(arbre, "arbre_grosFichier.dot");
 }
 
 
@@ -52,7 +51,7 @@ void test_encodage_analyseFichierConstruitArbre(void)
 	Arbre result;
 	FILE* fichier;
 	
-	fichier=fopen("./testCompression", "ro");
+	fichier=fopen("./grosFichier", "ro");
 	
 	encodage_analyseFichier(fichier, freq);
 	
@@ -62,7 +61,7 @@ void test_encodage_analyseFichierConstruitArbre(void)
 	
 	result=liste_construitArbre(liste);
 	
-	arbre_afficheArbreDot(result, "test.dot");
+	arbre_afficheArbreDot(result, "arbre_grosFichier.dot");
 	
 	printf("%d feuilles !\n", arbre_nbFeuilles(result));
 }
@@ -77,7 +76,7 @@ void test_encode(void)
 	Arbre result;
 	FILE* fichier;
 	
-	fichier=fopen("./testCompression", "ro");	
+	fichier=fopen("./grosFichier", "ro");	
 	encodage_analyseFichier(fichier, freq);	
 	liste=liste_construitListeArbres(freq);	
 	result=liste_construitArbre(liste);
@@ -103,7 +102,7 @@ void test_decode(void)
 	char** binaire;
 	FILE* fichier;
 	
-	fichier=fopen("./testCompression", "ro");
+	fichier=fopen("./grosFichier", "ro");
     
     encodage_analyseFichier(fichier, freq);
 		
@@ -118,14 +117,5 @@ void test_decode(void)
 
 void test_compresse(void)
 {
-	compression_compresse("./testCompression");	
+	compression_compresse("./grosFichier");	
 }
-
- 
-/*
-int main (void)
-{
-	test_compresse();
-	return 0;
-}
-*/
