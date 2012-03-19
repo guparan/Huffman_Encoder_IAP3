@@ -102,6 +102,7 @@ void arbre_afficheArbreDot(Arbre a, char* filename)
 		fprintf(stderr, "Erreur fct system");
 		exit(-1);
 	}
+    free(command);
 }
 
 
