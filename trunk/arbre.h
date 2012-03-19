@@ -96,7 +96,7 @@ bool arbre_estFeuille(Arbre);
 
 /**
  * \fn int arbre_nbFeuilles(Arbre);
- * \brief Renvoie le nombre de feuille de l'arbre en paramètre
+ * \brief Renvoie le nombre de feuille de l'arbre en paramètre. Precondition: l'arbre doit être un ABR.
  * 
  * \param arbre
  **/

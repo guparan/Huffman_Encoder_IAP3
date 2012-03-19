@@ -13,7 +13,7 @@ void compression_compresse(char* nomFichier)
 	FILE* input;
     FILE *fichierComp = NULL, *fichierCodage = NULL; 
     Arbre huffman;
-    char** tabCorres;
+    char** tabCorres = NULL;
     char *extensionFichComp = ".comp", *extensionFichCodage = ".huf";
     int i = 0, j = 0, freq[256] = {0};
     int nbBit=0;
@@ -54,7 +54,7 @@ void compression_compresse(char* nomFichier)
     huffman = liste_construitArbre(liste_construitListeArbres(freq));
     */
     
-    i=0;
+    i=1;
     while(tabCorres[i]!=NULL)
     {
 		if(strcmp(tabCorres[i], "")) 

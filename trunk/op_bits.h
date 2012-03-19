@@ -12,10 +12,35 @@
  **/
 int tailleFichier(FILE*);
 
+
+/**
+ * \fn void ecritNiemeBit(unsigned char *buff, unsigned char bit, int n);
+
+ * \brief 
+ * 
+ * \param buff
+ * \param bit
+ * \param n 
+ **/
 void ecritNiemeBit(unsigned char *buff, unsigned char bit, int n);
 
-unsigned char  litNiemeBit(unsigned char *buff, int n);
 
+/**
+ * \fn unsigned char litNiemeBit(unsigned char *buff, int n);
+ * \brief 
+ * 
+ * \param buff
+ * \param n
+ **/
+unsigned char litNiemeBit(unsigned char *buff, int n);
+
+
+/**
+ * \fn void afficher_binaire(unsigned char a);
+ * \brief 
+ * 
+ * \param 
+ **/
 void afficher_binaire(unsigned char a);
 
 #endif

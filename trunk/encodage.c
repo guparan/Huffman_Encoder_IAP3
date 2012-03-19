@@ -29,7 +29,7 @@ char** encodage_construitTabCorres(Arbre a, int nbFeuilles, char* construct, cha
 	/* Controle des arguments */
 	if(!binaire)
 	{
-		binaire=(char**)malloc(256*sizeof(char*)+1);
+		binaire=(char**)malloc(256*sizeof(char*)+1);    /* +1 pour la sentinelle */
 		for(j=0;j<256;++j)
 		{
 			binaire[j]=(char*)malloc(sizeof(char));
