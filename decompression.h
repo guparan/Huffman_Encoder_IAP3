@@ -1,11 +1,9 @@
 #ifndef DECOMPRESSION_H
 #define DECOMPRESSION_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <errno.h>
-#include "op_bits.c"
+#include "encodage.h"
+#include "op_bits.h"
 
 /**
  * \fn void decompression_compresse(FILE*, char*);

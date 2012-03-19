@@ -1,8 +1,6 @@
 #ifndef __ENCODAGE_H_
 #define __ENCODAGE_H_
 
-#include <stdio.h>
-#include <string.h>
 #include "listeArbres.h"
 
 

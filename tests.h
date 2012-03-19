@@ -1,7 +1,6 @@
 #ifndef TESTS_H
 #define TESTS_H
 
-#include <stdio.h>
 #include "arbre.h"
 #include "listeArbres.h"
 #include "encodage.h"
