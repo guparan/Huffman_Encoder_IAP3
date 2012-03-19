@@ -8,6 +8,7 @@ FILE* decompression_decompresse(char* nomFichier)
     char **tabCorrespondance = malloc(256*sizeof(char*)), **tabContenuFichier = NULL;
     
     realloc(nomFichierCodage, strlen(nomFichierCodage)+strlen(extensionFichComp)+1);
+    
     fichierCodage = fopen(strcat(nomFichierCodage, extensionFichCodage), "r");
     if (fichierCodage == NULL)
     {
@@ -41,7 +42,6 @@ FILE* decompression_decompresse(char* nomFichier)
     
     
     /* Décompression du fichier */
-    
     realloc(nomFichier, strlen(nomFichier)+strlen(extensionFichComp)+1);
     fichierComp = fopen(strcat(nomFichier, extensionFichComp), "rb");
     if (fichierComp == NULL)
