@@ -16,13 +16,13 @@ FILE* compression_compresse(char* nomFichier)
     char** tabCorres;
     char *extensionFichComp = ".comp", *extensionFichCodage = ".huf";
     int i = 0, j = 0, freq[256] = {0};
-    int nbCar=0;
+    int nbBit=0;
     char* nomFichierComp;
     char* nomFichierCodage;
     unsigned char* buf;
     int carLu=0;
     char* codeAssoc;
-    int tailleAssoc;
+    int tailleAssoc, positionCourante=0;
     
     if((input=fopen(nomFichier, "ro"))==NULL)
     {
@@ -30,23 +30,53 @@ FILE* compression_compresse(char* nomFichier)
 		exit(errno);
 	}
     
-    /* Init des variables necessaires */
-    nbCar=encodage_analyseFichier(input, freq);
+    /* Init des variables necessaires 
+    encodage_analyseFichier(input, freq);
     huffman = liste_construitArbre(liste_construitListeArbres(freq));
-    tabCorres = encodage_tabCorrespondance(huffman);
-	buf=(unsigned char*)malloc(nbCar);
-	
-	arbre_afficheArbreDot(huffman, "test.dot");
+    tabCorres = encodage_tabCorrespondance(huffman);*/
+    
+    /* TEST */
+		tabCorres=(char**)malloc(256*sizeof(char*)+1);
+		for(j=0;j<256;++j)
+		{
+			tabCorres[j]=(char*)malloc(sizeof(char));
+			strcpy(tabCorres[j],"");
+		}
+		tabCorres[256]=NULL;		
+		tabCorres[116]="1";
+		tabCorres[101]="01";
+		tabCorres[115]="00";
+		
+		freq[116]=2;
+		freq[101]=1;
+		freq[115]=1;
+    
+    huffman = liste_construitArbre(liste_construitListeArbres(freq));
+    
+    i=0;
+    while(tabCorres[i]!=NULL)
+    {
+		if(strcmp(tabCorres[i], "")) 
+		{
+			printf("%d : %s (freq=%d)\n", i, tabCorres[i], freq[i]);
+			nbBit+=freq[i]*(strlen(tabCorres[i]));
+		}
+		i++;
+	}
+	printf("Nb bits : %d\n", nbBit);
+    buf=(unsigned char*)malloc(nbBit);
+        
+    arbre_afficheArbreDot(huffman, "test.dot");
     
     /* Ecriture du codage dans le fichier dédié; nécessaire pour la décompression */
-    nomFichierCodage=malloc(strlen(nomFichier)+strlen(extensionFichCodage)+1);
+    nomFichierCodage=(char*)malloc(strlen(nomFichier)+strlen(extensionFichCodage)+1);
     strcpy(nomFichierCodage, nomFichier);
     strcat(nomFichierCodage, extensionFichCodage);
     fichierCodage = fopen(nomFichierCodage, "w+");
     
     for (i=0; i<256; i++)
     {
-        fprintf(fichierCodage, "%d %d\n", i, freq[i]);
+        if(freq[i]!=0) fprintf(fichierCodage, "%d\n%d\n", i, freq[i]);
     }
     
     /* Creation et ouverture du fichier compresse */
@@ -62,30 +92,29 @@ FILE* compression_compresse(char* nomFichier)
     {
 		codeAssoc=tabCorres[carLu];
 		tailleAssoc=strlen(codeAssoc);
-		if(tailleAssoc!=8)
-		{
-			for(j=0 ; j<(8-tailleAssoc) ; ++j)
-			{
-				ecritNiemeBit(buf, '0', (i*8-1)+j);
-			}
-		}
 		for(j=0 ; j<tailleAssoc ; ++j)
 		{
-			ecritNiemeBit(buf, codeAssoc[j], ((i*8-1)+(8-tailleAssoc+j)));
+			printf("%c", codeAssoc[j]);
+			ecritNiemeBit(buf, codeAssoc[j], positionCourante+j);
 		}
 		/* printf("buf : %s\n", buf[i]); */
+		positionCourante=j;
 		i++;
 	}
-	
+        
 	/* On ecrit tous les octets de buf dans le fichier compresse */
-	for(i=0 ; i<nbCar ; ++i)
+	printf("\n");
+	for(i=0 ; i<nbBit ; ++i)
 	{
+		printf("%u", buf[i]);
 		fputc(buf[i], fichierComp);
 	}
-    
+
     /* Affichage du taux de compression */
     printf("Taux de compression obtenu: %.2f\n", compression_tauxCompression(input, fichierComp, fichierCodage));
     
     return fichierComp;
     
+    
 }
+

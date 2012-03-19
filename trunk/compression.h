@@ -2,6 +2,7 @@
 #define COMPRESSION_H
 
 #include <errno.h>
+#include "arbre.h"
 #include "encodage.h"
 #include "op_bits.h"
 
