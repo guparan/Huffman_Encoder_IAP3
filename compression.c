@@ -15,8 +15,7 @@ FILE* compression_compresse(char* nomFichier)
     Arbre huffman;
     char** tabCorres;
     char *extensionFichComp = ".comp", *extensionFichCodage = ".huf";
-    int i = 0, j=0;
-    int freq[256] = {0};
+    int i = 0, j = 0, freq[256] = {0};
     int nbCar=0;
     char* nomFichierComp;
     char* nomFichierCodage;
@@ -34,7 +33,7 @@ FILE* compression_compresse(char* nomFichier)
     /* Init des variables necessaires */
     nbCar=encodage_analyseFichier(input, freq);
     huffman = liste_construitArbre(liste_construitListeArbres(freq));
-    tabCorres = encodage_tabCorrespondance(huffman);    
+    tabCorres = encodage_tabCorrespondance(huffman);
 	buf=(unsigned char*)malloc(nbCar);
 	
 	arbre_afficheArbreDot(huffman, "test.dot");
@@ -44,14 +43,10 @@ FILE* compression_compresse(char* nomFichier)
     strcpy(nomFichierCodage, nomFichier);
     strcat(nomFichierCodage, extensionFichCodage);
     fichierCodage = fopen(nomFichierCodage, "w+");
-    i=0;
-    while (tabCorres[i] != NULL)
+    
+    for (i=0; i<256; i++)
     {
-        if (strcmp(tabCorres[i], ""))
-        {
-            fprintf(fichierCodage, "%d %s\n", i, tabCorres[i]);
-        }
-        i++;
+        fprintf(fichierCodage, "%d %d\n", i, freq[i]);
     }
     
     /* Creation et ouverture du fichier compresse */

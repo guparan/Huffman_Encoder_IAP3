@@ -4,85 +4,87 @@ FILE* decompression_decompresse(char* nomFichier)
 {
     FILE *fichierComp = NULL, *fichierCodage = NULL, *fichierDecomp = NULL;
     char *nomFichierCodage = nomFichier, *extensionFichComp = ".comp", *extensionFichCodage = ".huf", *buffer = NULL;
-    int caractereActuel = 0, i = 0, j = 0;
-    char **tabCorrespondance = malloc(256*sizeof(char*)), **tabContenuFichier = NULL;
+    int caractereActuel = 0, i = 0, j = 0, freq[256];
+    Arbre huffman = NULL, courant = NULL;
     
-    realloc(nomFichierCodage, strlen(nomFichierCodage)+strlen(extensionFichComp)+1);
     
-    fichierCodage = fopen(strcat(nomFichierCodage, extensionFichCodage), "r");
-    if (fichierCodage == NULL)
+    /* Ouverture du fichier d'informations de codage et test d'ouverture */
+    realloc(nomFichierCodage, strlen(nomFichierCodage)+strlen(extensionFichComp)+1); /* realloc de nomFichierCodage pour ajouter l'extension */
+    fichierCodage = fopen(strcat(nomFichierCodage, extensionFichCodage), "r");  /* Ouverture du fichier */
+    if (fichierCodage == NULL)      /* Test d'ouverture */
     {
         perror("fopen");
         exit(errno);
     }
     
-   /* Création de la table d'association ASCII / codage à utiliser */
-        
+    
+   /* Création de la table des fréquences à utiliser (par lecture de fichierCodage) */
     while (caractereActuel != EOF)
     {
-        caractereActuel = fgetc(fichierComp);   /* on lit l'indice */
-        i = caractereActuel;    /* on l'affecte à i */
-        caractereActuel = fgetc(fichierComp);   /* on passe le caractère " " (espace) qui sépare l'indice du code */
-        caractereActuel = fgetc(fichierComp);   /* lecture du premier chiffre de la fréquence associée */
-        
-        while (caractereActuel != '\n')     /* on lit le code à placer dans tabCorrespondance[i] */
+        caractereActuel = fgetc(fichierComp);   /* on lit l'indice (ou EOF si on est à la fin du fichier) */
+        if (caractereActuel != EOF)
         {
-            j++;    /* nombre de char dans le buffer */
-            realloc(buffer, j*sizeof(char));
-            buffer[j-1] = caractereActuel;      /* on remplit le buffer avec le code (suite de 0 et 1) */
-            caractereActuel = fgetc(fichierComp);   /* on passe au caractère suivant */
+            i = caractereActuel;    /* on l'affecte à i */
+            caractereActuel = fgetc(fichierComp);   /* on passe le caractère " " (espace) qui sépare l'indice du code */
+            caractereActuel = fgetc(fichierComp);   /* lecture du premier chiffre de la fréquence associée */
+            
+            while (caractereActuel != '\n')     /* on lit le code à placer dans freq[i] */
+            {
+                j++;    /* nombre de char dans le buffer */
+                realloc(buffer, j*sizeof(char));
+                buffer[j-1] = caractereActuel;      /* on remplit le buffer avec le chiffre (char) lu */
+                caractereActuel = fgetc(fichierComp);   /* on passe au caractère suivant */
+            }
+            
+            freq[i] = atoi(buffer); /* atoi : conversion string to int */        
+            j = 0;      /* on réinitialise j */
+            free(buffer);   /* on réinitialise le buffer */
         }
-        
-        tabCorrespondance[i] = buffer;
-        j = 0;      /* on réinitialise j */
-        free(buffer);   /* on réinitialise le buffer */
     }
     
-    fclose(fichierCodage);
+    fclose(fichierCodage);  /* Fin des opérations sur fichierCodage */
     
     
-    /* Décompression du fichier */
-    realloc(nomFichier, strlen(nomFichier)+strlen(extensionFichComp)+1);
-    fichierComp = fopen(strcat(nomFichier, extensionFichComp), "rb");
-    if (fichierComp == NULL)
+    /* Création de l'arbre de Huffman à partir du tableau des fréquences */
+    huffman = liste_construitArbre(liste_construitListeArbres(freq));
+    
+    
+    /* Ouverture du fichier compressé et test d'ouverture */
+    realloc(nomFichier, strlen(nomFichier)+strlen(extensionFichComp)+1);    /* realloc de nomFichier pour ajouter l'extension */
+    fichierComp = fopen(strcat(nomFichier, extensionFichComp), "rb");   /* Ouverture du fichier */
+    if (fichierComp == NULL)        /* Test d'ouverture */
     {
         perror("fopen");
         exit(errno);
     }
     
-    tabContenuFichier = (char**)malloc(((tailleFichier(fichierComp)/8)+1)*sizeof(char*));
     
-    i = 0;
-    caractereActuel = 0;    /* Réinitialisation de caractereActuel et de i */
-    
-    /* On place le contenu du fichier (en binaire) dans le tableau tabContenuFichier */
-    
-    while (caractereActuel != EOF)
-    {
-        tabContenuFichier[i] = (char*)malloc(8*sizeof(char));
-        for (j=0; j<8; j++)
-        {
-            caractereActuel = fgetc(fichierComp);
-            tabContenuFichier[i][j] = caractereActuel;
-        }
-        i++;
-    }
-    tabContenuFichier[i] = (char*)malloc(8*sizeof(char));
-    tabContenuFichier[i] = NULL;
-    i = 0;  /* Réinitialisation de i */
-    
-    
-    /* On remplit le fichier décompressé */
+    /* Creation du fichier décompressé et test d'ouverture */
     fichierDecomp = fopen(nomFichier, "w+");
-
-    while (tabContenuFichier[i] != NULL)
+    if (fichierDecomp == NULL)        /* Test d'ouverture */
     {
-        fputc(encodage_decode(tabCorrespondance, tabContenuFichier[i]), fichierDecomp);
-        i++;
+        perror("fopen");
+        exit(errno);
     }
     
-    free(tabContenuFichier);
-    fclose(fichierComp);
+    
+    /* On lit fichierComp (en binaire) en parcourant l'arbre de huffman et on écrit dans fichierDecomp */
+    caractereActuel = 0;    /* Réinitialisation de caractereActuel pour la lecture de fichierComp */
+    while (caractereActuel != EOF)
+    {
+        courant = huffman;
+        caractereActuel = fgetc(fichierComp);
+        if (caractereActuel == '0')
+        {
+            courant = arbre_fg(courant);
+        }
+        else if (caractereActuel == '1')
+        {
+            courant = arbre_fd(courant);
+        }
+    }
+    
+    fclose(fichierComp);    /* Fin des opérations sur fichierComp */
     
     return fichierDecomp;
 }
