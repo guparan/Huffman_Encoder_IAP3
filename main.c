@@ -22,7 +22,7 @@
 #include "decompression.h"
 #include "tests.h"
 
-/*
+
 void menuCompresseur()
 {
     char choix [100], *nomFichier = NULL;
@@ -58,7 +58,7 @@ void menuCompresseur()
         };
     }
 }
-*/
+
 
 
 int main (int argc, const char * argv[])
