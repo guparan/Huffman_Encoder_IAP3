@@ -18,9 +18,25 @@ int encodage_analyseFichier(FILE *fp, int freq[256]);
  0 : fils gauche, 1 : fils droit */
 
 
+/**
+ * \fn char** encodage_construitTabCorres(Arbre a, int nbFeuilles, char* construct, char** binaire, int* nbFeuillesTraitees);
+ * \brief 
+ * 
+ * \param a arbre de Huffman
+ * \param
+ * \param
+ * \param
+ * \param
+ **/
 char** encodage_construitTabCorres(Arbre a, int nbFeuilles, char* construct, char** binaire, int* nbFeuillesTraitees);
 
 
+/**
+ * \fn char** encodage_tabCorrespondance(Arbre a);
+ * \brief Retourne la table des correspondances ASCII / codage à partir de l'arbre de Huffman en paramètre.
+ * 
+ * \param a arbres de Huffman
+ **/
 char** encodage_tabCorrespondance(Arbre a);
 
 
@@ -44,6 +60,13 @@ char* encodage_encode(char**, char);
 char encodage_decodeArbre(Arbre a, char* code);
 
 
+/**
+ * \fn char encodage_decode(char**, char*);
+ * \brief Retourne le caractère correspondant à la séquence de bits en paramètre
+ * 
+ * \param tableau des correspondances ASCII / codage à utiliser
+ * \param séquence de bits à décoder
+ **/
 char encodage_decode(char**, char*);
 
 
