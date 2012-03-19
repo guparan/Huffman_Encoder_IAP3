@@ -3,13 +3,13 @@
 FILE* decompression_decompresse(char* nomFichier)
 {
     FILE *fichierComp = NULL, *fichierCodage = NULL, *fichierDecomp = NULL;
-    char *nomFichierCodage = nomFichier, *extensionFichComp = ".comp", *extensionFichCodage = ".huf", *indice = NULL, *frequence = NULL;
+    char *nomFichierCodage = nomFichier, *nomFichierComp = nomFichier, *extensionFichComp = ".comp", *extensionFichCodage = ".huf", *extensionFichDecomp = ".decomp", *indice = NULL, *frequence = NULL;
     int caractereActuel = 0, freq[256] = {0};
     Arbre huffman = NULL, courant = NULL;
     
     
     /* Ouverture du fichier d'informations de codage et test d'ouverture */
-    realloc(nomFichierCodage, strlen(nomFichierCodage)+strlen(extensionFichComp)+1); /* realloc de nomFichierCodage pour ajouter l'extension */
+    realloc(nomFichierCodage, strlen(nomFichierCodage)+strlen(extensionFichCodage)+1); /* realloc de nomFichierCodage pour ajouter l'extension */
     fichierCodage = fopen(strcat(nomFichierCodage, extensionFichCodage), "r");  /* Ouverture du fichier */
     free(nomFichierCodage);
     if (fichierCodage == NULL)      /* Test d'ouverture */
@@ -39,8 +39,8 @@ FILE* decompression_decompresse(char* nomFichier)
     
     
     /* Ouverture du fichier compressé et test d'ouverture */
-    realloc(nomFichier, strlen(nomFichier)+strlen(extensionFichComp)+1);    /* realloc de nomFichier pour ajouter l'extension */
-    fichierComp = fopen(strcat(nomFichier, extensionFichComp), "rb");   /* Ouverture du fichier en mode */
+    realloc(nomFichierComp, strlen(nomFichierComp)+strlen(extensionFichComp)+1);    /* realloc de nomFichier pour ajouter l'extension */
+    fichierComp = fopen(strcat(nomFichierComp, extensionFichComp), "rb");   /* Ouverture du fichier en mode */
     if (fichierComp == NULL)        /* Test d'ouverture */
     {
         perror("fopen");
@@ -49,7 +49,8 @@ FILE* decompression_decompresse(char* nomFichier)
     
     
     /* Creation du fichier décompressé et test d'ouverture */
-    fichierDecomp = fopen(nomFichier, "w+");
+    realloc(nomFichier, strlen(nomFichier)+strlen(extensionFichDecomp)+1);    /* realloc de nomFichier pour ajouter l'extension */
+    fichierDecomp = fopen(strcat(nomFichier, extensionFichDecomp), "w+");
     if (fichierDecomp == NULL)        /* Test d'ouverture */
     {
         perror("fopen");
