@@ -25,7 +25,7 @@
 
 void menuCompresseur()
 {
-    char choix [100], *nomFichier = NULL;
+    char choix[100], nomFichier[100];
     int input = 0;
     
     while (input != 9)
@@ -37,11 +37,13 @@ void menuCompresseur()
         switch(input)
         {
             case 1:
+                system("clear");
                 printf("Entrez le nom du fichier à compresser (extension comprise):\n");
                 scanf("%s", nomFichier);
                 compression_compresse(nomFichier);
                 break;
             case 2:
+                system("clear");
                 printf("Entrez le nom du fichier à décompresser (extension NON comprise):\n");
                 scanf("%s", nomFichier);
                 decompression_decompresse(nomFichier);
@@ -63,8 +65,8 @@ void menuCompresseur()
 
 int main (int argc, const char * argv[])
 {
-	test_compresse();
+	/*test_compresse();*/
 	
-    /*menuCompresseur();*/
+    menuCompresseur();
     return 0;
 }
