@@ -7,14 +7,16 @@ FILE* decompression_decompresse(char* nomFichier)
     char* extensionFichComp = ".comp", *extensionFichCodage = ".huf", *extensionFichDecomp = ".decomp";
     char *indice = NULL;
     char *frequence = NULL;
-    int caractereActuel = 0, freq[256] = {0};
+    unsigned char caractereActuel; 
+    int freq[256] = {0};
     Arbre huffman = NULL, courant = NULL;
     
     
     /* Ouverture du fichier d'informations de codage et test d'ouverture */
     nomFichierCodage=(char*)malloc(strlen(nomFichier)+strlen(extensionFichCodage)+1); /* malloc de nomFichierCodage pour ajouter l'extension */
     strcpy(nomFichierCodage, nomFichier);
-    fichierCodage = fopen(strcat(nomFichierCodage, extensionFichCodage), "r");  /* Ouverture du fichier */
+    strcat(nomFichierCodage, extensionFichCodage);
+    fichierCodage = fopen(nomFichierCodage, "r");  /* Ouverture du fichier */
     free(nomFichierCodage);
     if (fichierCodage == NULL)      /* Test d'ouverture */
     {
@@ -28,9 +30,9 @@ FILE* decompression_decompresse(char* nomFichier)
     frequence = malloc(1024*sizeof(char));
     while (!feof(fichierCodage))
     {
-        fgets(indice, 6, fichierCodage);   /* on lit l'indice */
+        fgets(indice, 6, fichierCodage);   /* on lit l'indice (si EOF, indice = NULL) */
         fgets(frequence, 1024, fichierCodage);    /* on lit la fréquence correspondante */
-        freq[atoi(indice)] = atoi(frequence); /* atoi : conversion string to int */        
+        freq[atoi(indice)] = atoi(frequence);	/* atoi : conversion string to int */        
     }
     
     free(indice);
@@ -40,23 +42,26 @@ FILE* decompression_decompresse(char* nomFichier)
     
     /* Création de l'arbre de Huffman à partir du tableau des fréquences */
     huffman = liste_construitArbre(liste_construitListeArbres(freq));
-
+    
     
     /* Ouverture du fichier compressé et test d'ouverture */
     nomFichierComp=(char*)malloc(strlen(nomFichier)+strlen(extensionFichComp)+1);    /* malloc de nomFichierComp pour ajouter l'extension */
     strcpy(nomFichierComp, nomFichier);
+    strcat(nomFichierComp, extensionFichComp);
+    fichierComp = fopen(nomFichierComp, "rb");   /* Ouverture du fichier en mode */
     free(nomFichierComp);
-    fichierComp = fopen(strcat(nomFichierComp, extensionFichComp), "rb");   /* Ouverture du fichier en mode */
     if (fichierComp == NULL)        /* Test d'ouverture */
     {
         perror("fopen");
         exit(errno);
     }
     
+    
     /* Creation du fichier décompressé et test d'ouverture */
     nomFichierDecomp=(char*)malloc(strlen(nomFichier)+strlen(extensionFichDecomp)+1);    /* malloc de nomFichierDecomp pour ajouter l'extension */
     strcpy(nomFichierDecomp, nomFichier);
-    fichierDecomp = fopen(strcat(nomFichierDecomp, extensionFichDecomp), "w+");
+    strcat(nomFichierDecomp, extensionFichDecomp);
+    fichierDecomp = fopen(nomFichierDecomp, "w+");
     free(nomFichierDecomp);
     if (fichierDecomp == NULL)        /* Test d'ouverture */
     {
@@ -65,11 +70,11 @@ FILE* decompression_decompresse(char* nomFichier)
     }
     
     /* On lit fichierComp (en binaire) en parcourant l'arbre de huffman et on écrit dans fichierDecomp */
-    courant = huffman;  /* On initialise courant en lui affectant huffman */
-    
+    courant = huffman;  /* On initialise courant en lui affectant huffman */    
+    printf("\nEcriture de : ");
+	caractereActuel = fgetc(fichierComp);   /* lecture du premier caractère */
     while (!feof(fichierComp))
-    {
-        caractereActuel = fgetc(fichierComp);   /* lecture d'un caractère */
+    {		
         if (caractereActuel == '0')
         {
             courant = arbre_fg(courant);
@@ -81,13 +86,16 @@ FILE* decompression_decompresse(char* nomFichier)
         
         if (arbre_estFeuille(courant))
         {
+			printf("%c", arbre_carRacine(courant));
             fputc(arbre_carRacine(courant), fichierDecomp);
             courant = huffman;
         }
+        caractereActuel = fgetc(fichierComp);
     }
+    printf("\n");
     
     fclose(fichierComp);    /* Fin des opérations sur fichierComp */
     free(huffman);  /* On libère la mémoire utilisée par l'arbre de huffman */
-
+    
     return fichierDecomp;
 }

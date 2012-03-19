@@ -38,3 +38,14 @@ unsigned char  litNiemeBit(unsigned char *buff, int n) {
 	masque <<= (size_char -1 -nr);
 	return (buff[nd] & masque?1:0);
 }
+
+
+void afficher_binaire(unsigned char a)
+{
+	int i;
+	for(i=CHAR_BIT-1 ; i>=0 ; i--)
+	{
+		printf("%c", (a&(1<<i))?'1':'0');
+	}
+	printf("\n");
+}

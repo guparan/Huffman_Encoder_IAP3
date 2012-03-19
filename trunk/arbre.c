@@ -58,9 +58,14 @@ unsigned char arbre_carRacine(Arbre a)
 }
 
 
+/* precondition : l'arbre est un ABR */
 int arbre_nbFeuilles(Arbre a)
 {
-	return arbre_frequenceRacine(a);
+	if(arbre_estVide(arbre_fg(a)) && arbre_estVide(arbre_fd(a)))
+	{
+		return 1;
+	}
+	else return arbre_nbFeuilles(arbre_fg(a))+arbre_nbFeuilles(arbre_fd(a));
 }
 
 
