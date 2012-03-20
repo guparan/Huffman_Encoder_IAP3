@@ -23,8 +23,30 @@ void test_afficheArbre(void)
 	Arbre arbre = test_enracArbre();
 	
 	arbre_afficheArbre(arbre_fg(arbre), my_display);
+}
+
+
+void test_afficheArbreDot(char* filename)
+{
+	int freq[256]={0};
+	ListeArbres liste;
+	Arbre result;
+	FILE* fichier;
 	
-	arbre_afficheArbreDot(arbre, "arbre_grosFichier.dot");
+	fichier=fopen(filename, "ro");
+	if(fichier==NULL)
+	{
+		perror("fopen");
+		exit(errno);
+	}
+	
+	encodage_analyseFichier(fichier, freq);
+	
+	liste=liste_construitListeArbres(freq);
+	
+	result=liste_construitArbre(liste);
+	
+	arbre_afficheArbreDot(result, filename);
 }
 
 

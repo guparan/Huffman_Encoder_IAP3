@@ -30,16 +30,16 @@ void menuCompresseur()
     
     while (input != 9)
     {
-        printf("\n=== Programme de compression/décompression de fichiers === \n\t1. Afficher arbre de Huffman\n\t2. Compresser un fichier\n\t3. Décompresser un fichier\n\t9. Quitter\n\n");
+        printf("\n=== Programme de compression/décompression de fichiers === \n\t1. [Test] Afficher arbre de Huffman\n\t2. Compresser un fichier\n\t3. Décompresser un fichier\n\t9. Quitter\n\n");
         scanf("%s", choix);
         sscanf(choix, "%d", &input);
         
         switch(input)
         {
             case 1:
-                printf("Nom du fichier (extension comprise) : ");
+                printf("Nom du fichier à analyser (extension comprise) : ");
                 scanf("%s", nomFichier);
-                
+                test_afficheArbreDot(nomFichier);                
                 break;
             case 2:
                 printf("Nom du fichier à compresser (extension comprise) : ");

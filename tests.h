@@ -14,6 +14,8 @@ Arbre test_enracArbre(void);
 
 void test_afficheArbre(void);
 
+void test_afficheArbreDot(char* filename);
+
 void test_insererTriArbre(void);
 
 void test_encodage_analyseFichierConstruitArbre(void);
