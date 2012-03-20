@@ -81,28 +81,43 @@ void arbre_afficheArbre(Arbre a, void(*f)(unsigned char, int))
 
 void arbre_afficheArbreDot(Arbre a, char* filename)
 {
-	FILE* f;
+	FILE *output;
 	char* command;
-	command=(char*)malloc(2*strlen(filename)*sizeof(char)+34);
+	char* dot=".dot";
+	char* png=".png";
+	char* filename_dot;
+	char* filename_png;
 	
-	if((f=fopen(filename, "w+"))==NULL) 
+	filename_png=(char*)malloc(strlen(filename)+strlen(png)+1);
+	strcpy(filename_png, filename);
+	strcat(filename_png, png);
+	
+	filename_dot=(char*)malloc(strlen(filename)+strlen(dot)+1);
+	strcpy(filename_dot, filename);
+	strcat(filename_dot, dot);
+	
+	if((output=fopen(filename_dot, "w+"))==NULL) 
 	{ 
-		fprintf(stderr, "Pb ouverture ou creation \n");
-		exit(1);
+		perror("fopen");
+		exit(errno);
 	}
 	
-	fprintf(f, "graph graphname {\n");
-	arbre_parseArbre(a, f);
-	fprintf(f, "}\n");
+	fprintf(output, "graph graphname {\n");
+	arbre_parseArbre(a, output);
+	fprintf(output, "}\n");
 		
-	fclose(f);
-	sprintf(command, "dot %s -Tpng -Gcharset=latin1 -o %s.png", filename, filename);
+	fclose(output);
+	
+	command=(char*)malloc(2*strlen(filename)*sizeof(char)+19);
+	sprintf(command, "dot %s -Tpng -o %s", filename_dot, filename_png);
 	if(system(command)==-1)
 	{
 		fprintf(stderr, "Erreur fct system");
 		exit(-1);
 	}
     free(command);
+    free(filename_dot);
+    free(filename_png);
 }
 
 
