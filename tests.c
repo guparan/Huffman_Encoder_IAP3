@@ -52,6 +52,11 @@ void test_encodage_analyseFichierConstruitArbre(void)
 	FILE* fichier;
 	
 	fichier=fopen("./grosFichier", "ro");
+    if (fichier == NULL)
+    {
+        perror("fopen");
+        exit(errno);
+    }
 	
 	encodage_analyseFichier(fichier, freq);
 	
@@ -77,7 +82,12 @@ void test_encode(void)
 	Arbre result;
 	FILE* fichier;
 	
-	fichier=fopen("./grosFichier", "ro");	
+	fichier=fopen("./grosFichier", "ro");
+	if (fichier == NULL)
+    {
+        perror("fopen");
+        exit(errno);
+    }
 	encodage_analyseFichier(fichier, freq);	
 	liste=liste_construitListeArbres(freq);	
 	result=liste_construitArbre(liste);
@@ -104,6 +114,11 @@ void test_decode(void)
 	FILE* fichier;
 	
 	fichier=fopen("./grosFichier", "ro");
+    if (fichier == NULL)
+    {
+        perror("fopen");
+        exit(errno);
+    }
     
     encodage_analyseFichier(fichier, freq);
 		

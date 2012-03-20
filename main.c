@@ -30,18 +30,23 @@ void menuCompresseur()
     
     while (input != 9)
     {
-        printf("\n=== Programme de compression/décompression de fichiers === \n\t1. Compresser un fichier\n\t2. Décompresser un fichier\n\t9. Quitter\n\n");
+        printf("\n=== Programme de compression/décompression de fichiers === \n\t1. Afficher arbre de Huffman\n\t2. Compresser un fichier\n\t3. Décompresser un fichier\n\t9. Quitter\n\n");
         scanf("%s", choix);
         sscanf(choix, "%d", &input);
         
         switch(input)
         {
             case 1:
+                printf("Nom du fichier (extension comprise) : ");
+                scanf("%s", nomFichier);
+                
+                break;
+            case 2:
                 printf("Nom du fichier à compresser (extension comprise) : ");
                 scanf("%s", nomFichier);
                 compression_compresse(nomFichier);
                 break;
-            case 2:
+            case 3:
                 printf("Nom du fichier à décompresser (extension NON comprise) : ");
                 scanf("%s", nomFichier);
                 decompression_decompresse(nomFichier);
