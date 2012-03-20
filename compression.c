@@ -67,7 +67,6 @@ void compression_compresse(char* nomFichier)
     {
         if(freq[i]!=0) fprintf(fichierCodage, "%d\n%d\n", i, freq[i]);
     }
-    fclose(fichierCodage);
     
     /* Creation et ouverture du fichier compresse */
     nomFichierComp=(char*)malloc(strlen(nomFichier)+strlen(extensionFichComp)+1);
@@ -109,6 +108,8 @@ void compression_compresse(char* nomFichier)
     /* Affichage du taux de compression */
     printf("Taux de compression obtenu: %.2f\n", compression_tauxCompression(input, fichierComp, fichierCodage));
     
+    fclose(input);
+    fclose(fichierCodage);
     fclose(fichierComp);
 }
 

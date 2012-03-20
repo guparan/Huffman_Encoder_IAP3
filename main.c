@@ -30,30 +30,26 @@ void menuCompresseur()
     
     while (input != 9)
     {
-        printf(" === Programme de compression/décompression de fichiers === \n1. Compresser un fichier\n2. Décompresser un fichier\n\n9. Quitter\n\n");
+        printf("\n=== Programme de compression/décompression de fichiers === \n\t1. Compresser un fichier\n\t2. Décompresser un fichier\n\t9. Quitter\n\n");
         scanf("%s", choix);
         sscanf(choix, "%d", &input);
         
         switch(input)
         {
             case 1:
-                system("clear");
-                printf("Entrez le nom du fichier à compresser (extension comprise):\n");
+                printf("Nom du fichier à compresser (extension comprise) : ");
                 scanf("%s", nomFichier);
                 compression_compresse(nomFichier);
                 break;
             case 2:
-                system("clear");
-                printf("Entrez le nom du fichier à décompresser (extension NON comprise):\n");
+                printf("Nom du fichier à décompresser (extension NON comprise) : ");
                 scanf("%s", nomFichier);
                 decompression_decompresse(nomFichier);
                 break;
             case 9:
-                system("clear");
                 printf("A bientôt\n");
                 break;
             default:
-                system("clear");
                 printf("Ce choix n'existe pas\n\n");
                 input = 0;
                 break;
