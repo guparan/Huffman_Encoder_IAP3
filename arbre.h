@@ -29,6 +29,8 @@ typedef struct noeud {
 Arbre arbre_creerFeuille(unsigned char c, int freq);
 
 
+void arbre_supprimer(Arbre a);
+
 /**
  * \fn Arbre arbre_enrac(Arbre a_gauche, Arbre a_droit);
  * \brief Renvoie un arbre ayant pour fils gauche et droit les deux arbres en paramètre et pour fréquence la somme des fréquences des arbres en paramètre.

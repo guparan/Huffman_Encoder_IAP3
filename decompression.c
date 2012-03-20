@@ -109,6 +109,7 @@ void decompression_decompresse(char* nomFichier)
     
     fclose(fichierComp);    /* Fin des opérations sur fichierComp */
     free(buff);
-    free(huffman);  /* On libère la mémoire utilisée par l'arbre de huffman */
     fclose(fichierDecomp); 
+    
+    arbre_supprimer(huffman);
 }

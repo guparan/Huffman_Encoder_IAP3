@@ -115,5 +115,7 @@ void compression_compresse(char* nomFichier)
     fclose(input);
     fclose(fichierCodage);
     fclose(fichierComp);
+    
+    arbre_supprimer(huffman);
 }
 

@@ -34,7 +34,7 @@ void test_afficheArbreDot(char* filename)
 	FILE* fichier;
 	
 	fichier=fopen(filename, "ro");
-	if(fichier==NULL)
+	if(fichier==NULL)	
 	{
 		perror("fopen");
 		exit(errno);
