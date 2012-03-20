@@ -11,6 +11,6 @@
  * 
  * \param nom du fichier à décompression_compresser SANS L'EXTENSION (.huf ou .comp)
  **/
-FILE* decompression_decompresse(char*);
+void decompression_decompresse(char*);
 
 #endif

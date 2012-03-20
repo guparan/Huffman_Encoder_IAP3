@@ -1,6 +1,6 @@
 #include "decompression.h"
 
-FILE* decompression_decompresse(char* nomFichier)
+void decompression_decompresse(char* nomFichier)
 {
     FILE *fichierComp = NULL, *fichierCodage = NULL, *fichierDecomp = NULL;
     char *nomFichierComp, *nomFichierCodage, *nomFichierDecomp;
@@ -50,13 +50,13 @@ FILE* decompression_decompresse(char* nomFichier)
     nomFichierComp=(char*)malloc(strlen(nomFichier)+strlen(extensionFichComp)+1);    /* malloc de nomFichierComp pour ajouter l'extension */
     strcpy(nomFichierComp, nomFichier);
     strcat(nomFichierComp, extensionFichComp);
-    fichierComp = fopen(nomFichierComp, "r");   /* Ouverture du fichier */
-    free(nomFichierComp);
+    fichierComp = fopen(nomFichierComp, "rb");   /* Ouverture du fichier */
     if (fichierComp == NULL)        /* Test d'ouverture */
     {
         perror("fopen");
         exit(errno);
     }
+    free(nomFichierComp);
     
     
     /* Creation du fichier décompressé et test d'ouverture */
@@ -73,48 +73,42 @@ FILE* decompression_decompresse(char* nomFichier)
     
     /* On lit fichierComp (en binaire) en parcourant l'arbre de huffman et on écrit dans fichierDecomp */
     courant = huffman;  /* On initialise courant en lui affectant huffman */    
-	buff=(unsigned char*)malloc(tailleFichier(fichierComp));
+	buff=(unsigned char*)malloc(tailleFichier(fichierComp)+1	);
 	
 	i=0;
 	while(!feof(fichierComp))
 	{
-		buff[i]=fgetc(fichierComp);
+		buff[i]=(unsigned char)fgetc(fichierComp);
 		i++;
 	}
-	/*
-	printf("Buff : ");
-	for(i=0 ; i<tailleFichier(fichierComp) ; ++i)
-	{
-		printf("%c", buff[i]);
-	}
-	printf("\n");
-	*/
-	for(i=0 ; i<tailleFichier(fichierComp) ; ++i)
+	buff[i]=(unsigned char)'\0';
+	
+	for(i=0 ; i<tailleFichier(fichierComp)*8-2 ; ++i)
 	{
 		bitLu = litNiemeBit(buff, i);
-		printf("Bit lu : %c\n", bitLu);
 		
-        if (bitLu == '0')
+        if (bitLu == 0)
         {
+			/* printf("Bit lu : %d\n", bitLu); */
             courant = arbre_fg(courant);
         }
-        else if (bitLu == '1')
+        else if (bitLu == 1)
         {
+			/* printf("Bit lu : %d\n", bitLu); */
             courant = arbre_fd(courant);
         }
         
         if (arbre_estFeuille(courant))
         {
-			printf("%c", arbre_carRacine(courant));
+			/* printf("Ecriture de : %c\n", arbre_carRacine(courant)); */
             fputc(arbre_carRacine(courant), fichierDecomp);
             courant = huffman;
         }
     }
-    printf("\n");
+    /* printf("\n"); */
     
     fclose(fichierComp);    /* Fin des opérations sur fichierComp */
     free(buff);
     free(huffman);  /* On libère la mémoire utilisée par l'arbre de huffman */
-    
-    return fichierDecomp;
+    fclose(fichierDecomp); 
 }

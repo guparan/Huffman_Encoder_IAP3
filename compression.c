@@ -20,6 +20,7 @@ void compression_compresse(char* nomFichier)
     char* nomFichierComp;
     char* nomFichierCodage;
     unsigned char* buf;
+    unsigned char bit;
     int carLu=0;
     char* codeAssoc;
     int tailleAssoc, positionCourante=0;
@@ -47,9 +48,9 @@ void compression_compresse(char* nomFichier)
 		i++;
 	}
 	/* printf("Nb bits : %d\n", nbBit); */
-    buf=(unsigned char*)malloc(nbBit);
+    buf=(unsigned char*)malloc((nbBit/8)+1);
         
-    arbre_afficheArbreDot(huffman, "test.dot");
+    /* arbre_afficheArbreDot(huffman, "test.dot"); */
     
     /* Ecriture des frequences dans le fichier dédié, nécessaire pour la décompression */
     nomFichierCodage=(char*)malloc(strlen(nomFichier)+strlen(extensionFichCodage)+1);
@@ -86,21 +87,23 @@ void compression_compresse(char* nomFichier)
     {
 		codeAssoc=tabCorres[carLu];
 		tailleAssoc=strlen(codeAssoc);
-		printf("Ecriture a la position %d : ", positionCourante);
+		/* printf("Ecriture a la position %d : ", positionCourante); */
 		for(j=0 ; j<tailleAssoc ; ++j)
 		{
-			printf("%c", codeAssoc[j]);
-			ecritNiemeBit(buf, codeAssoc[j], positionCourante+j);
+			/* printf("%c", codeAssoc[j]); */
+			if(codeAssoc[j]=='0') bit=(unsigned char)0; 
+			else bit=(unsigned char)1;
+			ecritNiemeBit(buf, bit, positionCourante+j);
 		}
-		printf("\n");
+		/* printf("\n"); */
 		positionCourante+=tailleAssoc;
 		i++;
 	}
         
 	/* On ecrit tous les octets de buf dans le fichier compresse */
-	for(i=0 ; i<nbBit ; ++i)
+	for(i=0 ; i<((nbBit/8)+1) ; ++i)
 	{
-		fputc(buf[i], fichierComp);
+		fwrite(&buf[i], 1, sizeof(unsigned char), fichierComp);
 	}
     
     free(buf);
@@ -108,6 +111,7 @@ void compression_compresse(char* nomFichier)
     /* Affichage du taux de compression */
     printf("Taux de compression obtenu: %.2f\n", compression_tauxCompression(input, fichierComp, fichierCodage));
     
+    /* Fermeture des fichiers ouverts */
     fclose(input);
     fclose(fichierCodage);
     fclose(fichierComp);
