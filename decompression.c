@@ -73,7 +73,7 @@ void decompression_decompresse(char* nomFichier)
     
     /* On lit fichierComp (en binaire) en parcourant l'arbre de huffman et on écrit dans fichierDecomp */
     courant = huffman;  /* On initialise courant en lui affectant huffman */    
-	buff=(unsigned char*)malloc(tailleFichier(fichierComp)+1	);
+	buff=(unsigned char*)malloc(tailleFichier(fichierComp));
 	
 	i=0;
 	while(!feof(fichierComp))
@@ -83,7 +83,7 @@ void decompression_decompresse(char* nomFichier)
 	}
 	buff[i]=(unsigned char)'\0';
 	
-	for(i=0 ; i<tailleFichier(fichierComp)*8-2 ; ++i)
+	for(i=0 ; i<tailleFichier(fichierComp)*8-1 ; ++i)
 	{
 		bitLu = litNiemeBit(buff, i);
 		
