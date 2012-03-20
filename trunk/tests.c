@@ -120,5 +120,5 @@ void test_compresse(void)
 {
 	compression_compresse("./grosFichier");	
 	
-	decompression_decompresse("./grosFichier");
+	/*decompression_decompresse("./grosFichier");*/
 }
