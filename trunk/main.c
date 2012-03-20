@@ -39,17 +39,20 @@ void menuCompresseur()
             case 1:
                 printf("Nom du fichier à analyser (extension comprise) : ");
                 scanf("%s", nomFichier);
-                test_afficheArbreDot(nomFichier);                
+                test_afficheArbreDot(nomFichier);  
+                input = 0;
                 break;
             case 2:
                 printf("Nom du fichier à compresser (extension comprise) : ");
                 scanf("%s", nomFichier);
                 compression_compresse(nomFichier);
+                input = 0;
                 break;
             case 3:
                 printf("Nom du fichier à décompresser (extension NON comprise) : ");
                 scanf("%s", nomFichier);
                 decompression_decompresse(nomFichier);
+                input = 0;
                 break;
             case 9:
                 printf("A bientôt\n");
