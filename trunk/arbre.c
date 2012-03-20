@@ -12,6 +12,14 @@ Arbre arbre_creerFeuille(unsigned char c, int freq)
 }
 
 
+void arbre_supprimer(Arbre a)
+{
+	if(arbre_fg(a)) arbre_supprimer(arbre_fg(a));
+	if(arbre_fd(a)) arbre_supprimer(arbre_fd(a));
+	if(arbre_estFeuille(a)) free(a);
+}
+
+
 Arbre arbre_enrac(Arbre a_gauche, Arbre a_droit)
 {
 	Arbre a = arbre_creerFeuille('\0', a_gauche->freq + a_droit->freq);
@@ -115,6 +123,7 @@ void arbre_afficheArbreDot(Arbre a, char* filename)
 		fprintf(stderr, "Erreur fct system");
 		exit(-1);
 	}
+	
     free(command);
     free(filename_dot);
     free(filename_png);
