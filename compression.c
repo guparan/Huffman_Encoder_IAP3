@@ -4,7 +4,7 @@
 
 float compression_tauxCompression(FILE* init, FILE* comp, FILE* codage)
 {
-    return ((tailleFichier(comp)+tailleFichier(codage))/tailleFichier(init));
+    return (((float)tailleFichier(comp)+(float)tailleFichier(codage))/(float)tailleFichier(init));
 }
 
 
@@ -109,7 +109,7 @@ void compression_compresse(char* nomFichier)
     free(buf);
     
     /* Affichage du taux de compression */
-    printf("Taux de compression obtenu: %.2f\n", compression_tauxCompression(input, fichierComp, fichierCodage));
+    printf("Taux de compression obtenu: %.5f\n", compression_tauxCompression(input, fichierComp, fichierCodage));
     
     /* Fermeture des fichiers ouverts */
     fclose(input);
